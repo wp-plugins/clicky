@@ -12,6 +12,15 @@ Integrates the Clicky web analytics service and optionally the Clicky.me short U
 
 Integrates the Clicky web analytics service and optionally the Clicky.me short URL service into your blog.
 
+* Automatically adding your Clicky tracking code everywhere.
+* Option to ignore admins.
+* Option to store names of commenters.
+* Option to track posts & pages as goals and assign a revenue to that page or post.
+* An overview of your site's statistics on your dashboard.
+* Integration with the [Clicky.me Short URL service](http://clicky.me/).
+* Automatically create a short link for each now post and page.
+* Option to automatically tweet posts and pages on publish (either for each and every one or on a post by post basis), with the message being a prefix of your choice, the post title and then the short URL.
+
 == Installation ==
 
 1. Upload the `clicky` folder to the `/wp-content/plugins/` directory
