@@ -4,7 +4,7 @@ Donate link: http://yoast.com/
 Tags: analytics, statistics, clicky
 Requires at least: 2.8
 Tested up to: 2.9
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 Integrates the Clicky web analytics service and optionally the Clicky.me short URL service into your blog.
 
@@ -32,6 +32,11 @@ Integrates the Clicky web analytics service and optionally the Clicky.me short U
 1. The Clicky WordPress plugin settings panel.
 
 == Changelog ==
+
+= 1.0.3 =
+* Made all strings localizable (is that even a word).
+* Added .pot file to allow localization.
+* Added a Dutch translation.
 
 = 1.0.2 =
 * Added option to auto tweet articles, removing the checkbox from the add post screen. This makes sure auto tweet works when you're posting from within an external editor.
