@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.0.2
-Plugin URI: http://getclicky.com/goodies/
+Version: 1.0.3
+Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
 Author URI: http://yoast.com/
@@ -31,7 +31,11 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			$options = get_option('clicky');
 			if ( (!$options['site_id'] || empty($options['site_id']) || !$options['site_key'] || empty($options['site_key']) || !$options['admin_site_key'] || empty($options['admin_site_key'])) && !$_POST ) {
 				function clicky_warning() {
-					echo "<div id='clickywarning' class='updated fade'><p><strong>Clicky is almost ready</strong> You must <a href='options-general.php?page=clicky'>enter your Clicky Site ID, Site Key and Admin Site Key</a> for it to work.</p></div>";
+					echo "<div id='clickywarning' class='updated fade'><p><strong>";
+					_e('Clicky is almost ready');
+					echo "</strong>";
+					printf (__('You must %1$s enter your Clicky Site ID, Site Key and Admin Site Key%2$s for it to work.'), "<a href='options-general.php?page=clicky'>", "</a>");
+					echo "</p></div>";
 					echo "<script type=\"text/javascript\">setTimeout(function(){jQuery('#clickywarning').hide('slow');}, 10000);</script>";
 				}
 				add_action('admin_notices', 'clicky_warning');
@@ -51,24 +55,30 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			if ($options['allow_clickyme_integration']) {
 				if ($post->post_status == 'publish') {
 					$shorturl = clickyme_shorturl($post->ID);
-					echo '<p><strong>Twitter</strong></p>';
-					echo '<p>The Clicky.me short URL for this '.$post->post_type.' is <a href="'.$shorturl.'">'.$shorturl.'</a>. <a target="_blank" href="http://twitter.com/home?status='.urlencode($post->post_title.' - '.$shorturl).'">Tweet this post</a>.</p>';
-					echo '<br/>';
+					echo '<p><strong>'.__('Twitter').'</strong></p>';
+					echo '<p>';
+					_e('The Clicky.me short URL for this post is');
+					echo '<a href="'.$shorturl.'">'.$shorturl.'</a>. <a target="_blank" href="http://twitter.com/home?status='.urlencode($post->post_title.' - '.$shorturl).'">';
+					_e('Tweet this post');
+					echo '</a></p><br/>';
 				} else {
 					if (!$options['auto_tweet']) {
-						echo '<p><strong>Twitter</strong></p>';
-						echo '<p>This '.$post->post_type.' is not published yet, a short URL will be created for it once the post is published. Do you want it to be tweeted automatically too?<br/>
-						<br/>
-						<input type="checkbox" name="clicky_tweetpost" '.checked($clicky_tweetpost,true,false).'/> Tweet '.$post->post_type.' on publish</p>';
+						echo '<p><strong>'.__('Twitter').'</strong></p>';
+						echo '<p>';
+						_e('This post is not published yet, a short URL will be created for it once the post is published. Do you want it to be tweeted automatically too?');
+						echo '<br/><br/>';
+						echo '<input type="checkbox" name="clicky_tweetpost" '.checked($clicky_tweetpost,true,false).'/> '.__('Tweet post on publish').'</p>';
 						echo '<br/>';
 					}
 				}
 			}
-			echo '<p><strong>Goal Tracking</strong></p>';
-			echo '<p>Clicky can track Goals for you too, <a href="http://getclicky.com/stats/goals-setup">read the documentation here</a>. To be able to track a goal on this '.$post->post_type.', you need to specify the goal ID here. Optionally, you can also provide the goal revenue.</p>';
+			echo '<p><strong>'.__('Goal Tracking').'</strong></p>';
+			echo '<p>';
+			printf('Clicky can track Goals for you too, %1$sread the documentation here%2$s. To be able to track a goal on this post, you need to specify the goal ID here. Optionally, you can also provide the goal revenue.','<a href="http://getclicky.com/stats/goals-setup">','</a>');
+			echo '</p>';
 			echo '<table>';
-			echo '<tr><th style="text-align:left;"><label for="clicky_goal_id">Goal ID:</label></th><td><input type="text" name="clicky_goal_id" id="clicky_goal_id" value="'.$clicky_goal['id'].'"/></td></tr>';
-			echo '<tr><th style="text-align:left;"><label for="clicky_goal_value">Goal Revenue: &nbsp;</label></th><td><input type="text" name="clicky_goal_value" id="clicky_goal_value" value="'.$clicky_goal['value'].'"/></td></tr>';
+			echo '<tr><th style="text-align:left;"><label for="clicky_goal_id">'.__('Goal ID').':</label></th><td><input type="text" name="clicky_goal_id" id="clicky_goal_id" value="'.$clicky_goal['id'].'"/></td></tr>';
+			echo '<tr><th style="text-align:left;"><label for="clicky_goal_value">'.__('Goal Revenue').': &nbsp;</label></th><td><input type="text" name="clicky_goal_value" id="clicky_goal_value" value="'.$clicky_goal['value'].'"/></td></tr>';
 			echo '</table>';
 		}
 		
@@ -108,7 +118,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 		}
 
 		function register_dashboard_page() {
-			add_dashboard_page($this->shortname.' Stats', $this->shortname.' Stats', $this->accesslvl, $this->hook, array(&$this,'dashboard_page'));
+			add_dashboard_page($this->shortname.' '.__('Stats'), $this->shortname.' '.__('Stats'), $this->accesslvl, $this->hook, array(&$this,'dashboard_page'));
 		}
 		
 		function dashboard_page() {
@@ -142,7 +152,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 				
 				if (get_option('clicky') != $options) {
 					update_option('clicky', $options);
-					$message = "<p>Clicky settings have been updated.</p>";
+					$message = "<p>".__('Clicky settings have been updated.')."</p>";
 				}
 			}
 			
@@ -163,94 +173,94 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 								<?php
 								wp_nonce_field('clicky-config');
 																											
-								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">Go to your <a href="http://getclicky.com/user/">user homepage on Clicky</a> and click "Preferences" under the name of the domain, you will find the Site ID, Site Key and Admin Site Key under Site information.</p>';
+								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf("Go to your %1$suser homepage on Clicky%2$s and click 'Preferences' under the name of the domain, you will find the Site ID, Site Key and Admin Site Key under Site information.",'<a href="http://getclicky.com/user/">','</a>').'</p>';
 
 								$rows = array ();
 								$rows[] = array(
 											'id' => 'site_id',
-											'label' => 'Site ID',
+											'label' => __('Site ID'),
 											'desc' => '',
 											'content' => '<input class="text" type="text" value="'.$options['site_id'].'" name="site_id" id="site_id"/>',
 										);
 
 								$rows[] = array(
 											'id' => 'site_key',
-											'label' => 'Site Key',
+											'label' => __('Site Key'),
 											'desc' => '',
 											'content' => '<input class="text" type="text" value="'.$options['site_key'].'" name="site_key" id="site_key"/>',
 										);
 
 								$rows[] = array(
 											'id' => 'admin_site_key',
-											'label' => 'Admin Site Key',
+											'label' => __('Admin Site Key'),
 											'desc' => '',
 											'content' => '<input class="text" type="text" value="'.$options['admin_site_key'].'" name="admin_site_key" id="admin_site_key"/>',
 										);
 
 								$content .= ' '.$this->form_table($rows);
-								$this->postbox('clicky_settings','Clicky Settings', $content);
+								$this->postbox('clicky_settings',__('Clicky Settings'), $content);
 
-								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">This plugin allows you to automatically create short URL\'s through the <a href="http://clicky.me">Clicky.me service</a>, and tweet your post immediately when you publish it. To do that, this plugin will need your Twitter username and pass.</p>';
+								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf('This plugin allows you to automatically create short URLs through the %1$sClicky.me service%2$s','<a href="http://clicky.me">','</a>,').' '.__('and tweet your post immediately when you publish it. To do that, this plugin will need your Twitter username and pass.').'</p>';
 								
 								$rows = array();
 								$rows[] = array(
 											'id' => 'ignore_admin',
-											'label' => 'Ignore Admin users',
-											'desc' => 'If you are using a caching plugin, such as WP-Supercache, please ensure that you have it configured to NOT use the cache for logged in users. Otherwise, admin users <em>will still</em> be tracked.',
+											'label' => __('Ignore Admin users'),
+											'desc' => __('If you are using a caching plugin, such as WP-Supercache, please ensure that you have it configured to NOT use the cache for logged in users. Otherwise, admin users <em>will still</em> be tracked.'),
 											'content' => '<input type="checkbox" '.checked($options['ignore_admin'],true,false).' name="ignore_admin" id="ignore_admin"/>',
 										);
 
 								$rows[] = array(
 											'id' => 'track_names',
-											'label' => 'Track names of commenters',
+											'label' => __('Track names of commenters'),
 											'desc' => '',
 											'content' => '<input type="checkbox" '.checked($options['track_names'],true,false).' name="track_names" id="track_names"/>'
 										);
 														
-								$this->postbox('clicky_settings','Advanced Settings', $this->form_table($rows));
+								$this->postbox('clicky_settings',__('Advanced Settings'), $this->form_table($rows));
 
 								$rows = array();
 								$rows[] = array(
 											'id' => 'allow_clickyme_integration',
-											'label' => 'Allow Clicky.me integration',
+											'label' => __('Allow Clicky.me integration'),
 											'desc' => '',
 											'content' => '<input type="checkbox" '.checked($options['allow_clickyme_integration'],true,false).' name="allow_clickyme_integration" id="allow_clickyme_integration"/>',
 										);
 
 								$rows[] = array(
 											'id' => 'auto_tweet',
-											'label' => 'Auto Tweet',
-											'desc' => 'No need to check the box on each post, by checking this box, each post get\'s tweeted automatically.',
+											'label' => __('Auto Tweet'),
+											'desc' => __('No need to check the box on each post, by checking this box, each post get\'s tweeted automatically.'),
 											'content' => '<input type="checkbox" '.checked($options['auto_tweet'],true,false).' name="auto_tweet" id="auto_tweet"/>',
 										);
 
 								$rows[] = array(
 											'id' => 'twitter_username',
-											'label' => 'Twitter username',
+											'label' => __('Twitter username'),
 											'desc' => '',
 											'content' => '<input type="text" value="'.$options['twitter_username'].'" name="twitter_username" id="twitter_username"/>'
 										);
 
 								$rows[] = array(
 											'id' => 'twitter_password',
-											'label' => 'Twitter password',
+											'label' => __('Twitter password'),
 											'desc' => '',
 											'content' => '<input type="password" value="'.$options['twitter_password'].'" name="twitter_password" id="twitter_password"/>'
 										);
 
 								$rows[] = array(
 											'id' => 'twitter_prefix',
-											'label' => 'Prefix for Tweets',
-											'desc' => 'This text will be put in front of Tweets that are published when a blog post is published',
+											'label' => __('Prefix for Tweets'),
+											'desc' => __('This text will be put in front of Tweets that are published when a blog post is published'),
 											'content' => '<input type="text" class="text" value="'.$options['twitter_prefix'].'" name="twitter_prefix" id="twitter_prefix"/>'
 										);
 														
-								$this->postbox('clickyme_integration','Clicky.me &amp; Twitter Integration', $content .' '. $this->form_table($rows));
+								$this->postbox('clickyme_integration',__('Clicky.me &amp; Twitter Integration'), $content .' '. $this->form_table($rows));
 								
 
 								?>
 								<div class="submit">
-									<input type="submit" class="button-primary" name="submit" value="Update Clicky Settings &raquo;" />
+									<input type="submit" class="button-primary" name="submit" value="<?php _e("Update Clicky Settings"); ?> &raquo;" />
 								</div>
 							</form>
 						</div>
@@ -358,7 +368,7 @@ function clicky_script() {
 	
 	// Bail early if current user is admin and ignore admin is true
 	if( $options['ignore_admin'] && current_user_can("manage_options") ) {
-		echo "\n<!-- Clicky tracking not shown because you're an administrator and you've configured Clicky to ignore administrators. -->\n";
+		echo "\n<!-- ".__("Clicky tracking not shown because you're an administrator and you've configured Clicky to ignore administrators.")." -->\n";
 		return;
 	}
 			
