@@ -8,6 +8,8 @@ Author: Joost de Valk
 Author URI: http://yoast.com/
 */
 
+load_plugin_textdomain('clicky');
+
 if ( ! class_exists( 'Clicky_Admin' ) ) {
 
 	require_once('yst_plugin_tools.php');
@@ -74,7 +76,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			}
 			echo '<p><strong>'.__('Goal Tracking', 'clicky').'</strong></p>';
 			echo '<p>';
-			printf('Clicky can track Goals for you too, %1$sread the documentation here%2$s. To be able to track a goal on this post, you need to specify the goal ID here. Optionally, you can also provide the goal revenue.','<a href="http://getclicky.com/stats/goals-setup">','</a>');
+			printf(__('Clicky can track Goals for you too, %1$sread the documentation here%2$s. To be able to track a goal on this post, you need to specify the goal ID here. Optionally, you can also provide the goal revenue.'),'<a href="http://getclicky.com/stats/goals-setup">','</a>');
 			echo '</p>';
 			echo '<table>';
 			echo '<tr><th style="text-align:left;"><label for="clicky_goal_id">'.__('Goal ID', 'clicky').':</label></th><td><input type="text" name="clicky_goal_id" id="clicky_goal_id" value="'.$clicky_goal['id'].'"/></td></tr>';
@@ -165,7 +167,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			?>
 			<div class="wrap">
 				<a href="http://getclicky.com/"><div id="clicky-icon" style="background: url(<?php echo plugins_url('',__FILE__); ?>/clicky-32x32.png) no-repeat;" class="icon32"><br /></div></a>
-				<h2>Clicky Configuration</h2>
+				<h2>Clicky <?php _e("Configuration",'clicky'); ?></h2>
 				<div class="postbox-container" style="width:70%;">
 					<div class="metabox-holder">	
 						<div class="meta-box-sortables">
@@ -173,7 +175,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 								<?php
 								wp_nonce_field('clicky-config');
 																											
-								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf("Go to your %1$suser homepage on Clicky%2$s and click 'Preferences' under the name of the domain, you will find the Site ID, Site Key and Admin Site Key under Site information.",'<a href="http://getclicky.com/user/">','</a>').'</p>';
+								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf(__("Go to your %1$suser homepage on Clicky%2$s and click 'Preferences' under the name of the domain, you will find the Site ID, Site Key and Admin Site Key under Site information."),'<a href="http://getclicky.com/user/">','</a>').'</p>';
 
 								$rows = array ();
 								$rows[] = array(
@@ -200,7 +202,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 								$content .= ' '.$this->form_table($rows);
 								$this->postbox('clicky_settings',__('Clicky Settings', 'clicky'), $content);
 
-								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf('This plugin allows you to automatically create short URLs through the %1$sClicky.me service%2$s','<a href="http://clicky.me">','</a>,').' '.__('and tweet your post immediately when you publish it. To do that, this plugin will need your Twitter username and pass.', 'clicky').'</p>';
+								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf(__('This plugin allows you to automatically create short URLs through the %1$sClicky.me service%2$s'),'<a href="http://clicky.me">','</a>,').' '.__('and tweet your post immediately when you publish it. To do that, this plugin will need your Twitter username and pass.', 'clicky').'</p>';
 								
 								$rows = array();
 								$rows[] = array(

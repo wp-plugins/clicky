@@ -1,0 +1,192 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Clicky WordPress Plugin 1.0.3\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/clicky\n"
+"POT-Creation-Date: 2009-11-03 09:53+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joost de Valk <joost@yoast.com>\n"
+"Language-Team: Joost de Valk <joost@yoast.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: NETHERLANDS\n"
+
+#: clicky.php:35
+msgid "Clicky is almost ready"
+msgstr "Clicky is bijna klaar"
+
+#: clicky.php:37
+#, php-format
+msgid "You must %1$s enter your Clicky Site ID, Site Key and Admin Site Key%2$s for it to work."
+msgstr "Je moet %1$s je Clicky Site ID, Site Key en Admin Site Key invullen%2$s voor het werkt."
+
+#: clicky.php:58
+#: clicky.php:66
+msgid "Twitter"
+msgstr "Twitter"
+
+#: clicky.php:60
+msgid "The Clicky.me short URL for this post is"
+msgstr "De Clicky.me short URL voor deze post is"
+
+#: clicky.php:62
+msgid "Tweet this post"
+msgstr "Tweet deze post"
+
+#: clicky.php:68
+msgid "This post is not published yet, a short URL will be created for it once the post is published. Do you want it to be tweeted automatically too?"
+msgstr "Deze post is nog niet gepubliceerd, zodra hij gepubliceerd is wordt er een short URL gemaakt. Wil je dat de post ook automatisch getweet wordt?"
+
+#: clicky.php:70
+msgid "Tweet post on publish"
+msgstr "Tweet deze post na publicatie"
+
+#: clicky.php:75
+msgid "Goal Tracking"
+msgstr "Doel tracking"
+
+#: clicky.php:80
+msgid "Goal ID"
+msgstr "Doel ID"
+
+#: clicky.php:81
+msgid "Goal Revenue"
+msgstr "Doel Opbrengst"
+
+#: clicky.php:121
+msgid "Stats"
+msgstr "Stats"
+
+#: clicky.php:136
+msgid "You cannot edit the Clicky settings."
+msgstr "Je kunt de Clicky instellingen niet editen."
+
+#: clicky.php:155
+msgid "Clicky settings have been updated."
+msgstr "De instellingen van Clicky zijn ge&uuml;pdatet."
+
+#: clicky.php:181
+msgid "Site ID"
+msgstr "Site ID"
+
+#: clicky.php:188
+msgid "Site Key"
+msgstr "Site Key"
+
+#: clicky.php:195
+msgid "Admin Site Key"
+msgstr "Admin Site Key"
+
+#: clicky.php:201
+msgid "Clicky Settings"
+msgstr "Clicky Instellingen"
+
+#: clicky.php:203
+msgid "and tweet your post immediately when you publish it. To do that, this plugin will need your Twitter username and pass."
+msgstr "en tweet je post onmiddellijk na het publiceren. Om dat te doen heeft deze plugin je Twitter gebruikersnaam en wachtwoord nodig."
+
+#: clicky.php:208
+msgid "Ignore Admin users"
+msgstr "Negeer Site beheerders"
+
+#: clicky.php:209
+msgid "If you are using a caching plugin, such as WP-Supercache, please ensure that you have it configured to NOT use the cache for logged in users. Otherwise, admin users <em>will still</em> be tracked."
+msgstr "Als je een caching plugin gebruikt, zoals WP-Supercache, verifieer dan aub of deze geconfigureerd is om pagina's NIET te cachen for gebruikers die ingelogd zijn. Anders worden beheerders nog steeds getracked."
+
+#: clicky.php:215
+msgid "Track names of commenters"
+msgstr "Track namen van commenters"
+
+#: clicky.php:220
+msgid "Advanced Settings"
+msgstr "Geavanceerde Instellingen"
+
+#: clicky.php:225
+msgid "Allow Clicky.me integration"
+msgstr "Integreer Clicky.me"
+
+#: clicky.php:232
+msgid "Auto Tweet"
+msgstr "Automatisch Tweeten"
+
+#: clicky.php:233
+msgid "No need to check the box on each post, by checking this box, each post get's tweeted automatically."
+msgstr "Het is niet meer nodig om bij elke post de checkbox aan te vinken. Als je deze box aan vinkt wordt iedere post automatisch getweet."
+
+#: clicky.php:239
+msgid "Twitter username"
+msgstr "Twitter gebruikersnaam"
+
+#: clicky.php:246
+msgid "Twitter password"
+msgstr "Twitter wachtwoord"
+
+#: clicky.php:253
+msgid "Prefix for Tweets"
+msgstr "Voorvoegsel voor Tweets"
+
+#: clicky.php:254
+msgid "This text will be put in front of Tweets that are published when a blog post is published"
+msgstr "Deze tekst wordt voor Tweets geplaatst die worden gepubliceerd als u een nieuwe blog post publiceert"
+
+#: clicky.php:258
+msgid "Clicky.me &amp; Twitter Integration"
+msgstr "Clicky.me &amp; Twitter Integratie"
+
+#: clicky.php:263
+msgid "Update Clicky Settings"
+msgstr "Update Clicky Instellingen"
+
+#: clicky.php:371
+msgid "Clicky tracking not shown because you're an administrator and you've configured Clicky to ignore administrators."
+msgstr "Clicky tracking niet getoond omdat je een beheerder bent en je Clicky ingesteld hebt om beheerders niet te tracken."
+
+#: yst_plugin_tools.php:64
+msgid "Settings"
+msgstr "Instellingen"
+
+#: yst_plugin_tools.php:138
+msgid "Why not do any or all of the following:"
+msgstr "Waarom doe je niet een van de volgende zaken:"
+
+#: yst_plugin_tools.php:140
+msgid "Link to it so other folks can find out about it."
+msgstr "Link er naar zodat andere mensen hem kunnen vinden."
+
+#: yst_plugin_tools.php:141
+msgid "Give it a good rating on WordPress.org."
+msgstr "Geef het een goede rating op WordPress.org"
+
+#: yst_plugin_tools.php:142
+msgid "Donate a token of your appreciation."
+msgstr "Doneer een teken van uw appreciatie."
+
+#: yst_plugin_tools.php:151
+msgid "If you have any problems with this plugin or good ideas for improvements or new features, please talk about them in the"
+msgstr "Als je problemen hebt met deze plugin, of idee&euml;n hebt voor hoe je die kunt verbeteren, praat er dan ajb over in de"
+
+#: yst_plugin_tools.php:151
+msgid "Support forums"
+msgstr "Support forums"
+
+#. Plugin Name of an extension
+msgid "Clicky for WordPress"
+msgstr "Clicky voor WordPress"
+
+#. Plugin URI of an extension
+msgid "http://getclicky.com/goodies/#wordpress"
+msgstr "http://getclicky.com/goodies/#wordpress"
+
+#. Description of an extension
+msgid "Integrates Clicky on your blog!"
+msgstr "Integreer Clicky in je blog!"
+
+#. Author of an extension
+msgid "Joost de Valk"
+msgstr "Joost de Valk"
+
+#. Author URI of an extension
+msgid "http://yoast.com/"
+msgstr "http://yoast.com/"
+

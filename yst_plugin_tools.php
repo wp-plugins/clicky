@@ -61,7 +61,7 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 			static $this_plugin;
 			if( empty($this_plugin) ) $this_plugin = $this->filename;
 			if ( $file == $this_plugin ) {
-				$settings_link = '<a href="' . $this->plugin_options_url() . '">' . __('Settings') . '</a>';
+				$settings_link = '<a href="' . $this->plugin_options_url() . '">' . __('Settings', 'clicky') . '</a>';
 				array_unshift( $links, $settings_link );
 			}
 			return $links;
@@ -135,21 +135,21 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 		 * Create a "plugin like" box.
 		 */
 		function plugin_like() {
-			$content = '<p>'.__('Why not do any or all of the following:','clickyplugin').'</p>';
+			$content = '<p>'.__('Why not do any or all of the following:','clicky').'</p>';
 			$content .= '<ul>';
-			$content .= '<li><a href="'.$this->homepage.'">'.__('Link to it so other folks can find out about it.','clickyplugin').'</a></li>';
-			$content .= '<li><a href="http://wordpress.org/extend/plugins/'.$this->hook.'/">'.__('Give it a good rating on WordPress.org.','clickyplugin').'</a></li>';
-			$content .= '<li><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=2017947">'.__('Donate a token of your appreciation.','clickyplugin').'</a></li>';
+			$content .= '<li><a href="'.$this->homepage.'">'.__('Link to it so other folks can find out about it.','clicky').'</a></li>';
+			$content .= '<li><a href="http://wordpress.org/extend/plugins/'.$this->hook.'/">'.__('Give it a good rating on WordPress.org.','clicky').'</a></li>';
+			$content .= '<li><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=2017947">'.__('Donate a token of your appreciation.','clicky').'</a></li>';
 			$content .= '</ul>';
-			$this->postbox($this->hook.'like', 'Like this plugin?', $content);
+			$this->postbox($this->hook.'like', __('Like this plugin?','clicky'), $content);
 		}	
 		
 		/**
 		 * Info box with link to the support forums.
 		 */
 		function plugin_support() {
-			$content = '<p>'.__('If you have any problems with this plugin or good ideas for improvements or new features, please talk about them in the','clickyplugin').' <a href="http://wordpress.org/tags/'.$this->hook.'">'.__("Support forums",'clickyplugin').'</a>.</p>';
-			$this->postbox($this->hook.'support', 'Need support?', $content);
+			$content = '<p>'.__('If you have any problems with this plugin or good ideas for improvements or new features, please talk about them in the','clicky').' <a href="http://wordpress.org/tags/'.$this->hook.'">'.__("Support forums",'clicky').'</a>.</p>';
+			$this->postbox($this->hook.'support', __('Need support?','clicky'), $content);
 		}
 
 		/**
@@ -165,10 +165,10 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 					$content .= '<a class="rsswidget" href="'.clean_url( $item['link'], $protocolls=null, 'display' ).'">'. htmlentities($item['title']) .'</a> ';
 					$content .= '</li>';
 				}
-				$content .= '<li class="rss"><a href="'.$this->feed.'">Subscribe</a></li>';
-				$this->postbox('clickylatest', 'Latest news from Clicky', $content);
+				$content .= '<li class="rss"><a href="'.$this->feed.'">'.__('Subscribe','clicky').'</a></li>';
+				$this->postbox('clickylatest', __('Latest news from Clicky','clicky'), $content);
 			} else {
-				$this->postbox('clickylatest', 'Latest news from Clicky', 'Nothing to say...');
+				$this->postbox('clickylatest', __('Latest news from Clicky','clicky'), __('Nothing to say...','clicky'));
 			}
 		}
 
