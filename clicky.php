@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.0.3
+Version: 1.0.4
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -127,7 +127,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			$options = get_option('clicky');
 ?>
 		<br/>
-		<iframe style="margin-left: 20px; width: 850px; height: 1000px;" src="http://getclicky.com/stats/wp-iframe?site_id=<?php echo $options['site_id']; ?>&amp;sitekey=<?php echo $options['site_key']; ?>"></iframe>
+		<iframe style="margin-left: 20px; width: 850px; height: 1000px;" src="http://getclicky.com/stats/wp-iframe?site_id=<?php echo trim($options['site_id']); ?>&amp;sitekey=<?php echo $options['site_key']; ?>"></iframe>
 <?php			
 		}
 		
@@ -401,7 +401,7 @@ function clicky_script() {
 		$clicky_goal = get_post_meta($post->ID,'_clicky_goal',true);
 		if (isset($clicky_goal)) {
 			echo '<script type="text/javascript">';
-			echo 'var clicky_goal = { id: "'.$clicky_goal['id'].'"';
+			echo 'var clicky_goal = { id: "'.trim($clicky_goal['id']).'"';
 			if (isset($clicky_goal['value']) && !empty($clicky_goal['value'])) 
 				echo ', revenue: "'.$clicky_goal['value'].'"';
 			echo ' };';
@@ -412,8 +412,8 @@ function clicky_script() {
 	// Display the script
 ?>
 <script src="http://static.getclicky.com/js" type="text/javascript"></script>
-<script type="text/javascript">clicky.init(<?php echo $options['site_id']; ?>);</script>
-<noscript><p><img alt="Clicky" width="1" height="1" src="http://static.getclicky.com/<?php echo $options['site_id']; ?>ns.gif" /></p></noscript>	
+<script type="text/javascript">clicky.init(<?php echo trim($options['site_id']); ?>);</script>
+<noscript><p><img alt="Clicky" width="1" height="1" src="http://static.getclicky.com/<?php echo trim($options['site_id']); ?>ns.gif" /></p></noscript>	
 <!-- End Clicky Tracking -->
 <?php
 }
