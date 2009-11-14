@@ -4,7 +4,7 @@ Donate link: http://yoast.com/
 Tags: analytics, statistics, clicky
 Requires at least: 2.8
 Tested up to: 2.9
-Stable tag: 1.0.5
+Stable tag: 1.0.4
 
 Integrates the Clicky web analytics service and optionally the Clicky.me short URL service into your blog.
 
