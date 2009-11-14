@@ -1,14 +1,14 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.0.4
+Version: 1.0.5
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
 Author URI: http://yoast.com/
 */
 
-load_plugin_textdomain('clicky');
+load_plugin_textdomain('clicky','','/clicky/lang/');
 
 if ( ! class_exists( 'Clicky_Admin' ) ) {
 
@@ -34,7 +34,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			if ( (!$options['site_id'] || empty($options['site_id']) || !$options['site_key'] || empty($options['site_key']) || !$options['admin_site_key'] || empty($options['admin_site_key'])) && !$_POST ) {
 				function clicky_warning() {
 					echo "<div id='clickywarning' class='updated fade'><p><strong>";
-					_e('Clicky is almost ready', 'clicky');
+					_e('Clicky is almost ready. ', 'clicky');
 					echo "</strong>";
 					printf (__('You must %1$s enter your Clicky Site ID, Site Key and Admin Site Key%2$s for it to work.', 'clicky'), "<a href='options-general.php?page=clicky'>", "</a>");
 					echo "</p></div>";
@@ -175,7 +175,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 								<?php
 								wp_nonce_field('clicky-config');
 																											
-								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf(__("Go to your %1$suser homepage on Clicky%2$s and click 'Preferences' under the name of the domain, you will find the Site ID, Site Key and Admin Site Key under Site information."),'<a href="http://getclicky.com/user/">','</a>').'</p>';
+								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf(__('Go to your %1$suser homepage on Clicky%2$s and click &quot;Preferences&quot; under the name of the domain, you will find the Site ID, Site Key and Admin Site Key under Site information.', 'clicky'),'<a href="http://getclicky.com/user/">','</a>').'</p>';
 
 								$rows = array ();
 								$rows[] = array(
@@ -202,7 +202,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 								$content .= ' '.$this->form_table($rows);
 								$this->postbox('clicky_settings',__('Clicky Settings', 'clicky'), $content);
 
-								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf(__('This plugin allows you to automatically create short URLs through the %1$sClicky.me service%2$s'),'<a href="http://clicky.me">','</a>,').' '.__('and tweet your post immediately when you publish it. To do that, this plugin will need your Twitter username and pass.', 'clicky').'</p>';
+								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf(__('This plugin allows you to automatically create short URLs through the %1$sClicky.me service%2$s', 'clicky'),'<a href="http://clicky.me">','</a>,').' '.__('and tweet your post immediately when you publish it. To do that, this plugin will need your Twitter username and pass.', 'clicky').'</p>';
 								
 								$rows = array();
 								$rows[] = array(

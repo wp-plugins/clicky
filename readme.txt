@@ -4,7 +4,7 @@ Donate link: http://yoast.com/
 Tags: analytics, statistics, clicky
 Requires at least: 2.8
 Tested up to: 2.9
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 
 Integrates the Clicky web analytics service and optionally the Clicky.me short URL service into your blog.
 
@@ -32,6 +32,9 @@ Integrates the Clicky web analytics service and optionally the Clicky.me short U
 1. The Clicky WordPress plugin settings panel.
 
 == Changelog ==
+
+= 1.0.5 =
+* Minor copy changes.
 
 = 1.0.4 =
 * Made sure there's no spaces in the Site ID when displaying it, should solve blank Dashboard Stats Page issue.
