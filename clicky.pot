@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/clicky\n"
-"POT-Creation-Date: 2009-11-03 10:13+0000\n"
+"POT-Creation-Date: 2009-11-14 21:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: clicky.php:37
-msgid "Clicky is almost ready"
+msgid "Clicky is almost ready. "
 msgstr ""
 
 #: clicky.php:39
@@ -83,6 +83,14 @@ msgstr ""
 
 #: clicky.php:170
 msgid "Configuration"
+msgstr ""
+
+#: clicky.php:178
+#, php-format
+msgid ""
+"Go to your %1$suser homepage on Clicky%2$s and click &quot;Preferences&quot; "
+"under the name of the domain, you will find the Site ID, Site Key and Admin "
+"Site Key under Site information."
 msgstr ""
 
 #: clicky.php:183

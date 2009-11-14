@@ -42,6 +42,17 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 				}
 				add_action('admin_notices', 'clicky_warning');
 				return;
+			} else if ( (!$options['db_server'] || empty($options['db_server'])) && !$_POST ) {
+				function clicky_warning() {
+					echo "<div id='clickywarning' class='updated fade'><p><strong>";
+					_e('Clicky needs a bit more info. ', 'clicky');
+					echo "</strong>";
+					printf (__('You must %1$s enter your Clicky Database server%2$s for this plugin to be able to track comments.', 'clicky'), "<a href='options-general.php?page=clicky'>", "</a>");
+					echo "</p></div>";
+					echo "<script type=\"text/javascript\">setTimeout(function(){jQuery('#clickywarning').hide('slow');}, 10000);</script>";
+				}
+				add_action('admin_notices', 'clicky_warning');
+				return;
 			}
 		}
 
@@ -138,7 +149,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 				if (!current_user_can('manage_options')) die(__('You cannot edit the Clicky settings.', 'clicky'));
 				check_admin_referer('clicky-config');
 			
-				foreach (array('site_id', 'site_key', 'admin_site_key', 'twitter_username', 'twitter_password', 'twitter_prefix') as $option_name) {
+				foreach (array('site_id', 'site_key', 'admin_site_key', 'db_server', 'twitter_username', 'twitter_password', 'twitter_prefix') as $option_name) {
 					if (isset($_POST[$option_name]))
 						$options[$option_name] = $_POST[$option_name];
 					else
@@ -175,7 +186,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 								<?php
 								wp_nonce_field('clicky-config');
 																											
-								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf(__('Go to your %1$suser homepage on Clicky%2$s and click &quot;Preferences&quot; under the name of the domain, you will find the Site ID, Site Key and Admin Site Key under Site information.', 'clicky'),'<a href="http://getclicky.com/user/">','</a>').'</p>';
+								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf(__('Go to your %1$suser homepage on Clicky%2$s and click &quot;Preferences&quot; under the name of the domain, you will find the Site ID, Site Key, Admin Site Key and Database Server under Site information.', 'clicky'),'<a href="http://getclicky.com/user/">','</a>').'</p>';
 
 								$rows = array ();
 								$rows[] = array(
@@ -197,6 +208,13 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 											'label' => __('Admin Site Key', 'clicky'),
 											'desc' => '',
 											'content' => '<input class="text" type="text" value="'.$options['admin_site_key'].'" name="admin_site_key" id="admin_site_key"/>',
+										);
+
+								$rows[] = array(
+											'id' => 'db_server',
+											'label' => __('Database Server', 'clicky'),
+											'desc' => '',
+											'content' => '<input class="text" type="text" value="'.$options['db_server'].'" name="db_server" id="db_server"/>',
 										);
 
 								$content .= ' '.$this->form_table($rows);
@@ -295,6 +313,7 @@ function clicky_defaults() {
 		'twitter_username' 				=> '',
 		'twitter_password' 				=> '',
 		'twitter_prefix'				=> '',
+		'db_server'						=> '',
 		'auto_tweet'					=> false,
 		'ignore_admin' 					=> false,
 		'track_names'					=> true,
@@ -418,5 +437,87 @@ function clicky_script() {
 <?php
 }
 add_action('wp_footer','clicky_script',90);
+
+function clicky_log( $a ) {
+	$options 			= get_option('clicky');
+
+	if (!isset($options['db_server']) || empty($options['db_server']))
+		return;
+
+	$type = $a['type'];
+	if( !in_array( $type, array( "pageview", "download", "outbound", "click", "custom", "goal" ))) 
+		$type = "pageview";
+
+	$file = "http://static.getclicky.com/in.php?site_id=".$options['site_id']."&srv=".$options['db_server']."&sitekey_admin=".$options['admin_site_key']."&type=".$type;
+
+	# referrer and user agent - will only be logged if this is the very first action of this session
+	if( $a['ref'] ) 
+		$file .= "&ref=".urlencode( $a['ref'] );
+		
+	if( $a['ua']  ) 
+		$file .= "&ua=". urlencode( $a['ua']  );
+
+	# we need either a session_id or an ip_address...
+	if( is_numeric( $a['session_id'] )) {
+		$file .= "&session_id=".$a['session_id'];
+	} else {
+		if( !$a['ip_address'] ) 
+			$a['ip_address'] = $_SERVER['REMOTE_ADDR']; # automatically grab IP that PHP gives us.
+		if( !preg_match( "#^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$#", $a['ip_address'] )) 
+			return false;
+		$file .= "&ip_address=".$a['ip_address'];
+	}
+
+	# goals can come in as integer or array, for convenience
+	if( $a['goal'] ) {
+		if( is_numeric( $a['goal'] )) {
+			$file .= "&goal[id]=".$a['goal'];
+		} else {
+			if( !is_numeric( $a['goal']['id'] )) 
+				return false;
+			foreach( $a['goal'] as $key => $value ) 
+				$file .= "&goal[".urlencode( $key )."]=".urlencode( $value );
+		}
+	}
+
+	# custom data, must come in as array of key=>values
+	foreach( $a['custom'] as $key => $value ) 
+		$file .= "&custom[".urlencode( $key )."]=".urlencode( $value );
+
+	if( $type == "goal" || $type == "custom" ) {
+		# dont do anything, data has already been cat'd
+	} else {
+		if( $type == "outbound" ) {
+			if( !preg_match( "#^(https?|telnet|ftp)#", $a['href'] )) 
+				return false;
+		} else {
+			# all other action types must start with either a / or a #
+			if( !preg_match( "#^(/|\#)#", $a['href'] )) 
+				$a['href'] = "/" . $a['href'];
+		}
+		$file .= "&href=".urlencode( $a['href'] );
+		if( $a['title'] ) 
+			$file .= "&title=".urlencode( $a['title'] );
+	}
+	return wp_remote_get( $file ) ? true:false;
+}
+
+function clicky_track_comment($commentID, $comment_status) {
+	// Make sure to only track the comment if it's not spam.
+	if ($comment_status = 1) {
+		$comment = get_comment($commentID);
+		clicky_log( 
+			array( 
+				"type" => "click", 
+				"href" => str_replace(get_bloginfo('url'),'',$_SERVER['HTTP_REFERER']).'#comment-'.$commentID, 
+				"title" => __("Posted a comment",'clicky'),
+				"custom" => array(
+					"username" => $comment->comment_author
+				)
+			) 
+		);
+	}
+}
+add_action('comment_post','clicky_track_comment',10,2);
 
 ?>
