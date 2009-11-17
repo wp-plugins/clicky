@@ -42,18 +42,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 				}
 				add_action('admin_notices', 'clicky_warning');
 				return;
-			} else if ( (!$options['db_server'] || empty($options['db_server'])) && !$_POST ) {
-				function clicky_warning() {
-					echo "<div id='clickywarning' class='updated fade'><p><strong>";
-					_e('Clicky needs a bit more info. ', 'clicky');
-					echo "</strong>";
-					printf (__('You must %1$s enter your Clicky Database server%2$s for this plugin to be able to track comments.', 'clicky'), "<a href='options-general.php?page=clicky'>", "</a>");
-					echo "</p></div>";
-					echo "<script type=\"text/javascript\">setTimeout(function(){jQuery('#clickywarning').hide('slow');}, 10000);</script>";
-				}
-				add_action('admin_notices', 'clicky_warning');
-				return;
-			}
+			} 
 		}
 
 		function clicky_meta_box() {
@@ -149,7 +138,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 				if (!current_user_can('manage_options')) die(__('You cannot edit the Clicky settings.', 'clicky'));
 				check_admin_referer('clicky-config');
 			
-				foreach (array('site_id', 'site_key', 'admin_site_key', 'db_server', 'twitter_username', 'twitter_password', 'twitter_prefix') as $option_name) {
+				foreach (array('site_id', 'site_key', 'admin_site_key', 'twitter_username', 'twitter_password', 'twitter_prefix') as $option_name) {
 					if (isset($_POST[$option_name]))
 						$options[$option_name] = $_POST[$option_name];
 					else
@@ -208,13 +197,6 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 											'label' => __('Admin Site Key', 'clicky'),
 											'desc' => '',
 											'content' => '<input class="text" type="text" value="'.$options['admin_site_key'].'" name="admin_site_key" id="admin_site_key"/>',
-										);
-
-								$rows[] = array(
-											'id' => 'db_server',
-											'label' => __('Database Server', 'clicky'),
-											'desc' => '',
-											'content' => '<input class="text" type="text" value="'.$options['db_server'].'" name="db_server" id="db_server"/>',
 										);
 
 								$content .= ' '.$this->form_table($rows);
@@ -313,7 +295,6 @@ function clicky_defaults() {
 		'twitter_username' 				=> '',
 		'twitter_password' 				=> '',
 		'twitter_prefix'				=> '',
-		'db_server'						=> '',
 		'auto_tweet'					=> false,
 		'ignore_admin' 					=> false,
 		'track_names'					=> true,
@@ -418,7 +399,7 @@ function clicky_script() {
 	if (is_singular()) {
 		global $post;
 		$clicky_goal = get_post_meta($post->ID,'_clicky_goal',true);
-		if (isset($clicky_goal)) {
+		if (is_array($clicky_goal) && !empty($clicky_goal['id'])) {
 			echo '<script type="text/javascript">';
 			echo 'var clicky_goal = { id: "'.trim($clicky_goal['id']).'"';
 			if (isset($clicky_goal['value']) && !empty($clicky_goal['value'])) 
@@ -439,16 +420,16 @@ function clicky_script() {
 add_action('wp_footer','clicky_script',90);
 
 function clicky_log( $a ) {
-	$options 			= get_option('clicky');
+	$options = get_option('clicky');
 
-	if (!isset($options['db_server']) || empty($options['db_server']))
+	if (!isset($options['site_id']) || empty($options['site_id']) || !isset($options['admin_site_key']) || empty($options['admin_site_key']))
 		return;
 
 	$type = $a['type'];
 	if( !in_array( $type, array( "pageview", "download", "outbound", "click", "custom", "goal" ))) 
 		$type = "pageview";
 
-	$file = "http://static.getclicky.com/in.php?site_id=".$options['site_id']."&srv=".$options['db_server']."&sitekey_admin=".$options['admin_site_key']."&type=".$type;
+	$file = "http://static.getclicky.com/in.php?site_id=".$options['site_id']."&sitekey_admin=".$options['admin_site_key']."&type=".$type;
 
 	# referrer and user agent - will only be logged if this is the very first action of this session
 	if( $a['ref'] ) 
@@ -503,19 +484,25 @@ function clicky_log( $a ) {
 }
 
 function clicky_track_comment($commentID, $comment_status) {
-	// Make sure to only track the comment if it's not spam.
-	if ($comment_status = 1) {
+	// Make sure to only track the comment if it's not spam (but do it for moderated comments).
+	if ($comment_status != 'spam') {
 		$comment = get_comment($commentID);
-		clicky_log( 
-			array( 
-				"type" => "click", 
-				"href" => str_replace(get_bloginfo('url'),'',$_SERVER['HTTP_REFERER']).'#comment-'.$commentID, 
-				"title" => __("Posted a comment",'clicky'),
-				"custom" => array(
-					"username" => $comment->comment_author
-				)
-			) 
-		);
+		// Only do this for normal comments, not for pingbacks or trackbacks
+		if ($comment->comment_type != 'pingback' && $comment->comment_type != 'trackback') {
+			clicky_log( 
+				array( 
+					"type" 			=> "click", 
+					"href" 			=> "/wp-comments-post.php", 
+					"title" 		=> __("Posted a comment",'clicky'),
+					"ua"			=> $comment->comment_agent,
+					"ip_address"	=> $comment->comment_author_IP,
+					"custom" 		=> array(
+						"username" 	=> $comment->comment_author,
+						"email"		=> $comment->comment_author_email,
+					)
+				) 
+			);
+		}
 	}
 }
 add_action('comment_post','clicky_track_comment',10,2);
