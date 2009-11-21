@@ -4,7 +4,7 @@ Donate link: http://yoast.com/
 Tags: analytics, statistics, clicky
 Requires at least: 2.8
 Tested up to: 2.9
-Stable tag: 1.0.4
+Stable tag: 1.0.6
 
 Integrates the Clicky web analytics service and optionally the Clicky.me short URL service into your blog.
 
@@ -32,6 +32,11 @@ Integrates the Clicky web analytics service and optionally the Clicky.me short U
 1. The Clicky WordPress plugin settings panel.
 
 == Changelog ==
+
+= 1.0.6 =
+* Auto-tweeting now only happens when a post is first published. 
+* Made sure there are no spaces in site ID, site key and admin site key are always trimmed.
+* Added extra check to make sure clicky.me returned a valid short URL before tweeting.
 
 = 1.0.5 =
 * Minor copy changes.
