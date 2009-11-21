@@ -4,7 +4,7 @@ Donate link: http://yoast.com/
 Tags: analytics, statistics, clicky
 Requires at least: 2.8
 Tested up to: 2.9
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 
 Integrates the Clicky web analytics service and optionally the Clicky.me short URL service into your blog.
 
@@ -14,7 +14,7 @@ Integrates the Clicky web analytics service and optionally the Clicky.me short U
 
 * Automatically adding your Clicky tracking code everywhere.
 * Option to ignore admins.
-* Option to store names & email addresses of commenters, and register comments as an action.
+* Option to store names of commenters.
 * Option to track posts & pages as goals and assign a revenue to that page or post.
 * An overview of your site's statistics on your dashboard.
 * Integration with the [Clicky.me Short URL service](http://clicky.me/).
@@ -33,9 +33,13 @@ Integrates the Clicky web analytics service and optionally the Clicky.me short U
 
 == Changelog ==
 
+= 1.0.6 =
+* Auto-tweeting now only happens when a post is first published. 
+* Made sure there are no spaces in site ID, site key and admin site key are always trimmed.
+* Added extra check to make sure clicky.me returned a valid short URL before tweeting.
+
 = 1.0.5 =
 * Minor copy changes.
-* Added comment tracking through Clicky's Incoming API. Comments are tracked as a "click", but you can also set it as a goal, to learn how and for more details read this post: [Comment Tracking in Clicky](http://yoast.com/clicky-comment-tracking/).
 
 = 1.0.4 =
 * Made sure there's no spaces in the Site ID when displaying it, should solve blank Dashboard Stats Page issue.

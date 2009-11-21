@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.0.5
+Version: 1.0.6
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -30,7 +30,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 		}
 
 		function clicky_admin_warnings() {
-			$options = get_option('clicky');
+			$options = clicky_get_options();
 			if ( (!$options['site_id'] || empty($options['site_id']) || !$options['site_key'] || empty($options['site_key']) || !$options['admin_site_key'] || empty($options['admin_site_key'])) && !$_POST ) {
 				function clicky_warning() {
 					echo "<div id='clickywarning' class='updated fade'><p><strong>";
@@ -47,7 +47,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 
 		function clicky_meta_box() {
 			global $post;
-			$options 			= get_option('clicky');
+			$options 			= clicky_get_options();
 			$clicky_goal 		= get_post_meta($post->ID,'_clicky_goal',true);
 			$clicky_tweetpost	= get_post_meta($post->ID,'_clicky_tweetpost',true);
 			
@@ -102,7 +102,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 
 		function clicky_insert_post($pID) {
 			global $_POST;
-			$options = get_option('clicky');
+			$options = clicky_get_options();
 			extract($_POST);
 			$clicky_goal = array();
 			$clicky_goal['id'] = $clicky_goal_id;
@@ -124,15 +124,15 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 		}
 		
 		function dashboard_page() {
-			$options = get_option('clicky');
+			$options = clicky_get_options();
 ?>
 		<br/>
-		<iframe style="margin-left: 20px; width: 850px; height: 1000px;" src="http://getclicky.com/stats/wp-iframe?site_id=<?php echo trim($options['site_id']); ?>&amp;sitekey=<?php echo $options['site_key']; ?>"></iframe>
+		<iframe style="margin-left: 20px; width: 850px; height: 1000px;" src="http://getclicky.com/stats/wp-iframe?site_id=<?php echo $options['site_id']; ?>&amp;sitekey=<?php echo $options['site_key']; ?>"></iframe>
 <?php			
 		}
 		
 		function config_page() {
-			$options = get_option('clicky');
+			$options = clicky_get_options();
 			
 			if ( isset($_POST['submit']) ) {
 				if (!current_user_can('manage_options')) die(__('You cannot edit the Clicky settings.', 'clicky'));
@@ -152,7 +152,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 						$options[$option_name] = false;
 				}
 				
-				if (get_option('clicky') != $options) {
+				if (clicky_get_options() != $options) {
 					update_option('clicky', $options);
 					$message = "<p>".__('Clicky settings have been updated.', 'clicky')."</p>";
 				}
@@ -287,6 +287,18 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 	$clicky_admin = new Clicky_Admin();
 }
 
+function clicky_get_options() {
+	$options = get_option('clicky');
+	if (!is_array($options)) {
+		clicky_defaults();
+	} else {
+		$options['site_id'] 		= trim($options['site_id']);
+		$options['site_key'] 		= trim($options['site_key']);
+		$options['admin_site_key'] 	= trim($options['admin_site_key']);		
+	}
+	return $options;
+}
+
 function clicky_defaults() {
 	$options = array(
 		'site_id' 						=> '',
@@ -306,38 +318,48 @@ function clicky_defaults() {
 function clickyme_shorturl($pid) {
 	$shorturl = get_post_meta($post->ID, '_clickyme_url', true);
 	if (!$shorturl) {
-		$options = get_option('clicky');
+		$options = clicky_get_options();
 		if ( empty($options['site_id']) || empty($options['admin_site_key']) )
 			return false;
 
 		$res = wp_remote_get('http://clicky.me/app/api?site_id='.$options['site_id'].'&sitekey_admin='.$options['admin_site_key'].'&url='.get_permalink($pid)); 
 		if ($res['response']['code'] == 200) {
 			$shorturl = trim($res['body']);
-			if (preg_match( '#^http://#', $shorturl ))
+			if (preg_match( '#^http://#', $shorturl )) {
 				add_post_meta($post->ID,'_clickyme_url',$shorturl,true);
+				return $shorturl;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
 		}
 	}
 	return $shorturl;
 }
 
 function publish_tweet($pid) {
-	$options 	= get_option('clicky');
+	$options 	= clicky_get_options();
 	if (!$options['allow_clickyme_integration'] || $options['twitter_username'] == "" || $options['twitter_password'] == "")
 		return false;
 	
-	if (!$options['auto_tweet']) {
-		// Check if post has to be tweeted, if not, return false, else make sure it doesn't get tweeted twice.
-		$clicky_tweetpost = get_post_meta($pid,'_clicky_tweetpost',true);
-	
-		if (!$clicky_tweetpost) {
-			return false;
-		} else {
-			delete_post_meta($pid,'_clicky_tweetpost');
-			add_post_meta($pid,'_clicky_tweetpost',false, true);
-		}
+	// Check if post has to be tweeted, if not, return false, else make sure it doesn't get tweeted twice.
+	$clicky_tweetpost = get_post_meta($pid,'_clicky_tweetpost',true);
+
+	if (!$options['auto_tweet'] && !$clicky_tweetpost) {
+		return false;
+	} else {
+		delete_post_meta($pid,'_clicky_tweetpost');
+		add_post_meta($pid,'_clicky_tweetpost',false, true);
 	}
 		
 	$shorturl 		= clickyme_shorturl( $pid );
+	if (!$shorturl) {
+		// Short URL creation went wrong, make sure it tries again next time and bail.
+		delete_post_meta($pid,'_clicky_tweetpost');
+		add_post_meta($pid,'_clicky_tweetpost',true,true);		
+		return false;
+	}
 	$su_length		= strlen( $shorturl );
 	$status 		= trim( $options['twitter_prefix'] ).' '.get_the_title( $pid ).' -';
 
@@ -363,10 +385,7 @@ add_action('publish_post','publish_tweet');
 add_action('publish_page','publish_tweet');
 
 function clicky_script() {
-	$options = get_option('clicky');
-	if (!is_array($options)) {
-		clicky_defaults();
-	}
+	$options = clicky_get_options();
 	
 	// Bail early if current user is admin and ignore admin is true
 	if( $options['ignore_admin'] && current_user_can("manage_options") ) {
@@ -412,15 +431,15 @@ function clicky_script() {
 	// Display the script
 ?>
 <script src="http://static.getclicky.com/js" type="text/javascript"></script>
-<script type="text/javascript">clicky.init(<?php echo trim($options['site_id']); ?>);</script>
-<noscript><p><img alt="Clicky" width="1" height="1" src="http://static.getclicky.com/<?php echo trim($options['site_id']); ?>ns.gif" /></p></noscript>	
+<script type="text/javascript">clicky.init(<?php echo $options['site_id']; ?>);</script>
+<noscript><p><img alt="Clicky" width="1" height="1" src="http://static.getclicky.com/<?php echo $options['site_id']; ?>ns.gif" /></p></noscript>	
 <!-- End Clicky Tracking -->
 <?php
 }
 add_action('wp_footer','clicky_script',90);
 
 function clicky_log( $a ) {
-	$options = get_option('clicky');
+	$options = clicky_get_options();
 
 	if (!isset($options['site_id']) || empty($options['site_id']) || !isset($options['admin_site_key']) || empty($options['admin_site_key']))
 		return;
