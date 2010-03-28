@@ -420,12 +420,15 @@ function clicky_script() {
 		username: clicky_gc( 'comment_author_<?php echo md5( get_option("siteurl") ); ?>' ), 
 <?php 
 			} 
-			if ( is_single() ) {
-?>
-		author: '<?php the_author(); ?>',
-		category: '<?php $cat = get_the_category(); echo $cat[0]->name; ?>'			
-<?php
-			}
+/*			if ( is_single() ) {
+				echo "author: '";
+				the_author();
+				echo "',";
+				echo "category: '";
+				$cat = get_the_category(); 
+				echo $cat[0]->name; 
+				echo "'";
+			} */
 ?>
 	};
   	</script>
