@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.1
+Version: 1.1.2
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -412,27 +412,14 @@ function clicky_script() {
 	}
 <?php
 	}
+	if( $options['track_names'] ) { 
 ?>
 	var clicky_custom_session = { 
-<?php 
-			if( $options['track_names'] ) { 
-?>
-		username: clicky_gc( 'comment_author_<?php echo md5( get_option("siteurl") ); ?>' ), 
-<?php 
-			} 
-/*			if ( is_single() ) {
-				echo "author: '";
-				the_author();
-				echo "',";
-				echo "category: '";
-				$cat = get_the_category(); 
-				echo $cat[0]->name; 
-				echo "'";
-			} */
-?>
+		username: clicky_gc( 'comment_author_<?php echo md5( get_option("siteurl") ); ?>' )
 	};
   	</script>
 <?php
+	}
 	
 	// Goal tracking
 	if (is_singular()) {
