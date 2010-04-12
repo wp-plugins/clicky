@@ -4,7 +4,7 @@ Donate link: http://yoast.com/
 Tags: analytics, statistics, clicky
 Requires at least: 2.8
 Tested up to: 3.0
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 
 Integrates the Clicky web analytics service and optionally the Clicky.me short URL service into your blog.
 
@@ -32,6 +32,9 @@ Integrates the Clicky web analytics service and optionally the Clicky.me short U
 1. The Clicky WordPress plugin settings panel.
 
 == Changelog ==
+
+= 1.1.3 =
+* Fixed bug that would cause tracking not to work if commenter name tracking was not enabled.
 
 = 1.1.2 =
 * Another tiny bugfix on the js outputted.
