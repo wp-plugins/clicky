@@ -3,8 +3,8 @@ Contributors: joostdevalk
 Donate link: http://yoast.com/
 Tags: analytics, statistics, clicky
 Requires at least: 2.8
-Tested up to: 2.9
-Stable tag: 1.0.6
+Tested up to: 3.0
+Stable tag: 1.1.3
 
 Integrates the Clicky web analytics service and optionally the Clicky.me short URL service into your blog.
 
@@ -15,7 +15,7 @@ Integrates the Clicky web analytics service and optionally the Clicky.me short U
 * Automatically adding your Clicky tracking code everywhere.
 * Option to ignore admins.
 * Option to store names of commenters.
-* Option to track posts & pages as goals and assign a revenue to that page or post.
+* Option to track posts &amp; pages as goals and assign a revenue to that page or post.
 * An overview of your site's statistics on your dashboard.
 * Integration with the [Clicky.me Short URL service](http://clicky.me/).
 * Automatically create a short link for each now post and page.
@@ -32,6 +32,21 @@ Integrates the Clicky web analytics service and optionally the Clicky.me short U
 1. The Clicky WordPress plugin settings panel.
 
 == Changelog ==
+
+= 1.1.3 =
+* Fixed bug that would cause tracking not to work if commenter name tracking was not enabled.
+
+= 1.1.2 =
+* Another tiny bugfix on the js outputted.
+
+= 1.1.1 =
+* Removed tracking of category and author due to complaints. We'll see later if there's a way to add it back in more wisely.
+
+= 1.1 =
+* Switched to the new asynchronous javascript.
+* Added tracking of category and author as custom variables.
+* Fixed the bug that caused tweeting of updated posts.
+* Some slight updates to the backend.
 
 = 1.0.6 =
 * Auto-tweeting now only happens when a post is first published. 
