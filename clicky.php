@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.1.3
+Version: 1.1.4
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -166,7 +166,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			}
 			?>
 			<div class="wrap">
-				<a href="http://getclicky.com/"><div id="clicky-icon" style="background: url(<?php echo plugins_url('',__FILE__); ?>/images/clicky-32x32.png) no-repeat;" class="icon32"><br /></div></a>
+				<a href="http://getclicky.com/145844"><div id="clicky-icon" style="background: url(<?php echo plugins_url('',__FILE__); ?>/images/clicky-32x32.png) no-repeat;" class="icon32"><br /></div></a>
 				<h2>Clicky <?php _e("Configuration",'clicky'); ?></h2>
 				<div class="postbox-container" style="width:70%;">
 					<div class="metabox-holder">	
@@ -175,7 +175,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 								<?php
 								wp_nonce_field('clicky-config');
 																											
-								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf(__('Go to your %1$suser homepage on Clicky%2$s and click &quot;Preferences&quot; under the name of the domain, you will find the Site ID, Site Key, Admin Site Key and Database Server under Site information.', 'clicky'),'<a href="http://getclicky.com/user/">','</a>').'</p>';
+								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf(__('Go to your %1$suser homepage on Clicky%2$s and click &quot;Preferences&quot; under the name of the domain, you will find the Site ID, Site Key, Admin Site Key and Database Server under Site information.', 'clicky'),'<a href="http://getclicky.com/145844">','</a>').'</p>';
 
 								$rows = array ();
 								$rows[] = array(
