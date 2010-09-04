@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.0.6
+Version: 1.1.5
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -95,7 +95,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			add_action('admin_print_styles', array(&$this,'config_page_styles'));	
 			
 			add_action('admin_menu', array(&$this,'meta_box'));
-			add_action('wp_insert_post', array(&$this,'clicky_insert_post'));
+			add_action('publish_post', array(&$this,'clicky_insert_post'));
 			
 			$this->clicky_admin_warnings();
 		}
@@ -166,7 +166,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			}
 			?>
 			<div class="wrap">
-				<a href="http://getclicky.com/"><div id="clicky-icon" style="background: url(<?php echo plugins_url('',__FILE__); ?>/clicky-32x32.png) no-repeat;" class="icon32"><br /></div></a>
+				<a href="http://getclicky.com/145844"><div id="clicky-icon" style="background: url(<?php echo plugins_url('',__FILE__); ?>/images/clicky-32x32.png) no-repeat;" class="icon32"><br /></div></a>
 				<h2>Clicky <?php _e("Configuration",'clicky'); ?></h2>
 				<div class="postbox-container" style="width:70%;">
 					<div class="metabox-holder">	
@@ -175,7 +175,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 								<?php
 								wp_nonce_field('clicky-config');
 																											
-								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf(__('Go to your %1$suser homepage on Clicky%2$s and click &quot;Preferences&quot; under the name of the domain, you will find the Site ID, Site Key, Admin Site Key and Database Server under Site information.', 'clicky'),'<a href="http://getclicky.com/user/">','</a>').'</p>';
+								$content = '<p style="text-align:left; margin: 0 10px; font-size: 13px; line-height: 150%;">'.sprintf(__('Go to your %1$suser homepage on Clicky%2$s and click &quot;Preferences&quot; under the name of the domain, you will find the Site ID, Site Key, Admin Site Key and Database Server under Site information.', 'clicky'),'<a href="http://getclicky.com/145844">','</a>').'</p>';
 
 								$rows = array ();
 								$rows[] = array(
@@ -323,7 +323,7 @@ function clickyme_shorturl($pid) {
 			return false;
 
 		$res = wp_remote_get('http://clicky.me/app/api?site_id='.$options['site_id'].'&sitekey_admin='.$options['admin_site_key'].'&url='.get_permalink($pid)); 
-		if ($res['response']['code'] == 200) {
+		if (is_array($res) && $res['response']['code'] == 200) {
 			$shorturl = trim($res['body']);
 			if (preg_match( '#^http://#', $shorturl )) {
 				add_post_meta($post->ID,'_clickyme_url',$shorturl,true);
@@ -398,10 +398,10 @@ function clicky_script() {
 ?>
 <!-- Clicky Web Analytics - http://getclicky.com, WordPress Plugin by Yoast - http://yoast.com -->
 <?php
-		// Track commenter name if track_names is true
-		if( $options['track_names'] ) 
-{ ?>
-<script type='text/javascript'>
+	// Track commenter name if track_names is true
+	if( $options['track_names'] ) { 
+?>
+	<script type='text/javascript'>
 	function clicky_gc( name ) {
 		var ca = document.cookie.split(';');
 		for( var i in ca ) {
@@ -410,9 +410,12 @@ function clicky_script() {
 		}
 		return '';
 	}
-	var clicky_custom_session = { username: clicky_gc( 'comment_author_<?php echo md5( get_option("siteurl") ); ?>' ) };
+	var clicky_custom_session = { 
+		username: clicky_gc( 'comment_author_<?php echo md5( get_option("siteurl") ); ?>' )
+	};
   	</script>
-<?php 	}
+<?php
+	}
 	
 	// Goal tracking
 	if (is_singular()) {
@@ -430,9 +433,18 @@ function clicky_script() {
 	
 	// Display the script
 ?>
-<script src="http://static.getclicky.com/js" type="text/javascript"></script>
-<script type="text/javascript">clicky.init(<?php echo $options['site_id']; ?>);</script>
-<noscript><p><img alt="Clicky" width="1" height="1" src="http://static.getclicky.com/<?php echo $options['site_id']; ?>ns.gif" /></p></noscript>	
+<script type="text/javascript">
+	var clicky = { log: function(){ return; }, goal: function(){ return; }};
+	var clicky_site_id = <?php echo $options['site_id']; ?>;
+	(function() {
+		var s = document.createElement('script');
+		s.type = 'text/javascript';
+		s.async = true;
+		s.src = ( document.location.protocol == 'https:' ? 'https://static.getclicky.com' : 'http://static.getclicky.com' ) + '/js';
+		( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
+	})();
+</script>
+<noscript><p><img alt="Clicky" width="1" height="1" src="http://in.getclicky.com/<?php echo $options['site_id']; ?>ns.gif" /></p></noscript>
 <!-- End Clicky Tracking -->
 <?php
 }

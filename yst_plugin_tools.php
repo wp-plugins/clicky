@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Backend Class for use in all Yoast plugins, modified for Clicky plugin
+ * Backend Class for use in all Yoast plugins
  * Version 0.2
  */
 
@@ -15,19 +15,18 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 		var $ozhicon	= '';
 		var $optionname = '';
 		var $homepage	= '';
+		var $feed		= 'http://getclicky.com/blog/rss';
 		var $accesslvl	= 'manage_options';
-		var $feed 		= '';
 		
-		function Clicky_Base_Plugin_Admin() {
+		function Yoast_Plugin_Admin() {
 			add_action( 'admin_menu', array(&$this, 'register_settings_page') );
-
 			add_filter( 'plugin_action_links', array(&$this, 'add_action_link'), 10, 2 );
 			add_filter( 'ozh_adminmenu_icon', array(&$this, 'add_ozh_adminmenu_icon' ) );				
 			
-			add_action( 'admin_print_scripts', array(&$this,'config_page_scripts') );
-			add_action( 'admin_print_styles', array(&$this,'config_page_styles') );	
+			add_action('admin_print_scripts', array(&$this,'config_page_scripts'));
+			add_action('admin_print_styles', array(&$this,'config_page_styles'));	
 			
-			add_action('wp_dashboard_setup', array(&$this,'widget_setup') );	
+			add_action('wp_dashboard_setup', array(&$this,'widget_setup'));	
 		}
 		
 		function add_ozh_adminmenu_icon( $hook ) {
@@ -42,7 +41,7 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 				wp_enqueue_style('thickbox');
 				wp_enqueue_style('global');
 				wp_enqueue_style('wp-admin');
-				wp_enqueue_style('clicky-admin-css', WP_CONTENT_URL . '/plugins/' . plugin_basename(dirname(__FILE__)). '/yst_plugin_tools.css');
+				wp_enqueue_style('blogicons-admin-css', WP_CONTENT_URL . '/plugins/' . plugin_basename(dirname(__FILE__)). '/yst_plugin_tools.css');
 			}
 		}
 
@@ -61,7 +60,7 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 			static $this_plugin;
 			if( empty($this_plugin) ) $this_plugin = $this->filename;
 			if ( $file == $this_plugin ) {
-				$settings_link = '<a href="' . $this->plugin_options_url() . '">' . __('Settings', 'clicky') . '</a>';
+				$settings_link = '<a href="' . $this->plugin_options_url() . '">' . __('Settings') . '</a>';
 				array_unshift( $links, $settings_link );
 			}
 			return $links;
@@ -75,6 +74,8 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 			if (isset($_GET['page']) && $_GET['page'] == $this->hook) {
 				wp_enqueue_script('postbox');
 				wp_enqueue_script('dashboard');
+				wp_enqueue_script('thickbox');
+				wp_enqueue_script('media-upload');
 			}
 		}
 
@@ -107,6 +108,7 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 				</div>
 			</div>
 		<?php
+			$this->toc .= '<li><a href="#'.$id.'">'.$title.'</a></li>';
 		}	
 
 
@@ -115,17 +117,28 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 		 */
 		function form_table($rows) {
 			$content = '<table class="form-table">';
+			$i = 1;
 			foreach ($rows as $row) {
-				$content .= '<tr><th valign="top" scrope="row">';
+				$class = '';
+				if ($i > 1) {
+					$class .= 'yst_row';
+				}
+				if ($i % 2 == 0) {
+					$class .= ' even';
+				}
+				$content .= '<tr class="'.$row['id'].'_row '.$class.'"><th valign="top" scrope="row">';
 				if (isset($row['id']) && $row['id'] != '')
 					$content .= '<label for="'.$row['id'].'">'.$row['label'].':</label>';
 				else
 					$content .= $row['label'];
-				if (isset($row['desc']) && $row['desc'] != '')
-					$content .= '<br/><small>'.$row['desc'].'</small>';
 				$content .= '</th><td valign="top">';
 				$content .= $row['content'];
 				$content .= '</td></tr>'; 
+				if ( isset($row['desc']) && !empty($row['desc']) ) {
+					$content .= '<tr class="'.$row['id'].'_row '.$class.'"><td colspan="2" class="yst_desc"><small>'.$row['desc'].'</small></td></tr>';
+				}
+					
+				$i++;
 			}
 			$content .= '</table>';
 			return $content;
@@ -134,28 +147,34 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 		/**
 		 * Create a "plugin like" box.
 		 */
-		function plugin_like() {
-			$content = '<p>'.__('Why not do any or all of the following:','clicky').'</p>';
+		function plugin_like($hook = '') {
+			if (empty($hook)) {
+				$hook = $this->hook;
+			}
+			$content = '<p>'.__('Why not do any or all of the following:','ystplugin').'</p>';
 			$content .= '<ul>';
-			$content .= '<li><a href="'.$this->homepage.'">'.__('Link to it so other folks can find out about it.','clicky').'</a></li>';
-			$content .= '<li><a href="http://wordpress.org/extend/plugins/'.$this->hook.'/">'.__('Give it a good rating on WordPress.org.','clicky').'</a></li>';
-			$content .= '<li><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=2017947">'.__('Donate a token of your appreciation.','clicky').'</a></li>';
+			$content .= '<li><a href="'.$this->homepage.'">'.__('Link to it so other folks can find out about it.','ystplugin').'</a></li>';
+			$content .= '<li><a href="http://wordpress.org/extend/plugins/'.$hook.'/">'.__('Give it a good rating on WordPress.org.','ystplugin').'</a></li>';
+			$content .= '<li><a href="http://wordpress.org/extend/plugins/'.$hook.'/">'.__('Let other people know that it works with your WordPress setup.','ystplugin').'</a></li>';
 			$content .= '</ul>';
-			$this->postbox($this->hook.'like', __('Like this plugin?','clicky'), $content);
+			$this->postbox($hook.'like', 'Like this plugin?', $content);
 		}	
 		
 		/**
-		 * Info box with link to the support forums.
+		 * Info box with link to the bug tracker.
 		 */
-		function plugin_support() {
-			$content = '<p>'.__('If you have any problems with this plugin or good ideas for improvements or new features, please talk about them in the','clicky').' <a href="http://wordpress.org/tags/'.$this->hook.'">'.__("Support forums",'clicky').'</a>.</p>';
-			$this->postbox($this->hook.'support', __('Need support?','clicky'), $content);
+		function plugin_support($hook = '') {
+			if (empty($hook)) {
+				$hook = $this->hook;
+			}
+			$content = '<p>If you\'ve found a bug in this plugin, please submit it in the <a href="http://yoast.com/mantis/bug_report_page.php">Yoast Bug Tracker</a> with a clear description.</p>';
+			$this->postbox($this->hook.'support', __('Found a bug?','ystplugin'), $content);
 		}
 
 		/**
-		 * Box with latest news from getclicky.com
+		 * Box with latest news from GetClicky
 		 */
-		function news() {
+		function news( ) {
 			require_once(ABSPATH.WPINC.'/rss.php');  
 			if ( $rss = fetch_rss( $this->feed ) ) {
 				$content = '<ul>';
@@ -165,10 +184,11 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 					$content .= '<a class="rsswidget" href="'.clean_url( $item['link'], $protocolls=null, 'display' ).'">'. htmlentities($item['title']) .'</a> ';
 					$content .= '</li>';
 				}
-				$content .= '<li class="rss"><a href="'.$this->feed.'">'.__('Subscribe','clicky').'</a></li>';
-				$this->postbox('clickylatest', __('Latest news from Clicky','clicky'), $content);
+				$content .= '<li class="rss"><a href="http://yoast.com/feed/">Subscribe with RSS</a></li>';
+				$content .= '<li class="email"><a href="http://yoast.com/email-blog-updates/">Subscribe by email</a></li>';
+				$this->postbox('yoastlatest', 'Latest news from Clicky', $content);
 			} else {
-				$this->postbox('clickylatest', __('Latest news from Clicky','clicky'), __('Nothing to say...','clicky'));
+				$this->postbox('yoastlatest', 'Latest news from Clicky', 'Nothing to say...');
 			}
 		}
 
@@ -179,6 +199,46 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 				$text .= $finish;
 			}
 			return $text;
+		}
+
+		function db_widget() {
+			$options = get_option('yoastdbwidget');
+			if (isset($_POST['yoast_removedbwidget'])) {
+				$options['removedbwidget'] = true;
+				update_option('yoastdbwidget',$options);
+			}			
+			if ($options['removedbwidget']) {
+				echo "If you reload, this widget will be gone and never appear again, unless you decide to delete the database option 'yoastdbwidget'.";
+				return;
+			}
+			require_once(ABSPATH.WPINC.'/rss.php');
+			if ( $rss = fetch_rss( 'http://yoast.com/feed/' ) ) {
+				echo '<div class="rss-widget">';
+				echo '<a href="http://yoast.com/" title="Go to Yoast.com"><img src="http://netdna.yoast.com/yoast-logo-rss.png" class="alignright" alt="Yoast"/></a>';			
+				echo '<ul>';
+				$rss->items = array_slice( $rss->items, 0, 3 );
+				foreach ( (array) $rss->items as $item ) {
+					echo '<li>';
+					echo '<a class="rsswidget" href="'.clean_url( $item['link'], $protocolls=null, 'display' ).'">'. htmlentities($item['title']) .'</a> ';
+					echo '<span class="rss-date">'. date('F j, Y', strtotime($item['pubdate'])) .'</span>';
+					echo '<div class="rssSummary">'. $this->text_limit($item['summary'],250) .'</div>';
+					echo '</li>';
+				}
+				echo '</ul>';
+				echo '<div style="border-top: 1px solid #ddd; padding-top: 10px; text-align:center;">';
+				echo '<a href="http://feeds2.feedburner.com/joostdevalk"><img src="'.get_bloginfo('wpurl').'/wp-includes/images/rss.png" alt=""/> Subscribe with RSS</a>';
+				echo ' &nbsp; &nbsp; &nbsp; ';
+				echo '<a href="http://yoast.com/email-blog-updates/"><img src="http://netdna.yoast.com/email_sub.png" alt=""/> Subscribe by email</a>';
+				echo '<form class="alignright" method="post"><input type="hidden" name="yoast_removedbwidget" value="true"/><input title="Remove this widget from all users dashboards" type="submit" value="X"/></form>';
+				echo '</div>';
+				echo '</div>';
+			}
+		}
+
+		function widget_setup() {
+			$options = get_option('yoastdbwidget');
+			if (!$options['removedbwidget'])
+		    	wp_add_dashboard_widget( 'yoast_db_widget' , 'The Latest news from Yoast' , array(&$this, 'db_widget'));
 		}
 	}
 }
