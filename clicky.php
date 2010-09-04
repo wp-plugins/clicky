@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.1.4
+Version: 1.1.5
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -323,7 +323,7 @@ function clickyme_shorturl($pid) {
 			return false;
 
 		$res = wp_remote_get('http://clicky.me/app/api?site_id='.$options['site_id'].'&sitekey_admin='.$options['admin_site_key'].'&url='.get_permalink($pid)); 
-		if ($res['response']['code'] == 200) {
+		if (is_array($res) && $res['response']['code'] == 200) {
 			$shorturl = trim($res['body']);
 			if (preg_match( '#^http://#', $shorturl )) {
 				add_post_meta($post->ID,'_clickyme_url',$shorturl,true);

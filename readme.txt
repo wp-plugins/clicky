@@ -3,8 +3,8 @@ Contributors: joostdevalk
 Donate link: http://yoast.com/
 Tags: analytics, statistics, clicky
 Requires at least: 2.8
-Tested up to: 3.0
-Stable tag: 1.1.4
+Tested up to: 3.0.1
+Stable tag: 1.1.5
 
 Integrates the Clicky web analytics service and optionally the Clicky.me short URL service into your blog.
 
@@ -32,6 +32,9 @@ Integrates the [Clicky web analytics](http://getclicky.com/145844) service and o
 1. The Clicky WordPress plugin settings panel.
 
 == Changelog ==
+
+= 1.1.5 =
+* Tiny improvement in error handling to prevent "Cannot use object of type WP_Error as array" error.
 
 = 1.1.4 =
 * Minor backend improvements.
