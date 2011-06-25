@@ -1,36 +1,42 @@
-=== Clicky ===
+=== Clicky by Yoast ===
 Contributors: joostdevalk
-Donate link: http://yoast.com/
+Donate link: http://yoast.com/donate/
 Tags: analytics, statistics, clicky
 Requires at least: 2.8
 Tested up to: 3.2
-Stable tag: 1.2
+Stable tag: 1.2.1
 
-Integrates the Clicky web analytics service and optionally the Clicky.me short URL service into your blog.
+Integrates the Clicky (aka getClicky) web analytics service into your blog.
 
 == Description ==
 
-Integrates the [Clicky web analytics](http://getclicky.com/145844) service and optionally the Clicky.me short URL service into your blog.
+Integrates the [Clicky web analytics](http://getclicky.com/145844) service into your blog.
 
 * Automatically adding your Clicky tracking code everywhere.
 * Option to ignore admins.
 * Option to store names of commenters.
 * Option to track posts &amp; pages as goals and assign a revenue to that page or post.
 * An overview of your site's statistics on your dashboard.
-* Automatically create a short link for each now post and page.
-* Option to automatically tweet posts and pages on publish (either for each and every one or on a post by post basis), with the message being a prefix of your choice, the post title and then the short URL.
 
 == Installation ==
 
 1. Upload the `clicky` folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Enter your Site ID, Key and Admin Key, and if needed your Twitter username and password.
+1. Enter your Site ID, Key and Admin Key.
+1. You're done.
 
 == Screenshots ==
 
 1. The Clicky WordPress plugin settings panel.
+2. The Clicky metabox on posts and pages.
 
 == Changelog ==
+
+= 1.2.1 =
+
+* Made the admin class load conditionally instead of always.
+* Added donation button.
+* Updated documentation.
 
 = 1.2 =
 

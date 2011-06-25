@@ -167,7 +167,7 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 			if (empty($hook)) {
 				$hook = $this->hook;
 			}
-			$content = '<p>If you\'ve found a bug in this plugin, please submit it in the <a href="http://yoast.com/mantis/bug_report_page.php">Yoast Bug Tracker</a> with a clear description.</p>';
+			$content = '<p>If you\'ve found a bug in this plugin, please submit it in the <a href="http://yoast.com/bugs/clicky/">Yoast Bug Tracker</a> with a clear description.</p>';
 			$this->postbox($this->hook.'support', __('Found a bug?','ystplugin'), $content);
 		}
 
@@ -175,23 +175,38 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 		 * Box with latest news from GetClicky
 		 */
 		function news( ) {
-			require_once(ABSPATH.WPINC.'/rss.php');  
-			if ( $rss = fetch_rss( $this->feed ) ) {
-				$content = '<ul>';
-				$rss->items = array_slice( $rss->items, 0, 3 );
-				foreach ( (array) $rss->items as $item ) {
-					$content .= '<li>';
-					$content .= '<a class="rsswidget" href="'.clean_url( $item['link'], $protocolls=null, 'display' ).'">'. htmlentities($item['title']) .'</a> ';
-					$content .= '</li>';
-				}
-				$content .= '<li class="rss"><a href="http://yoast.com/feed/">Subscribe with RSS</a></li>';
-				$content .= '<li class="email"><a href="http://yoast.com/email-blog-updates/">Subscribe by email</a></li>';
-				$this->postbox('yoastlatest', 'Latest news from Clicky', $content);
+			include_once(ABSPATH . WPINC . '/feed.php');
+			$rss = fetch_feed( $this->feed );
+			$rss_items = $rss->get_items( 0, $rss->get_item_quantity(5) );
+			$content = '<ul>';
+			if ( !$rss_items ) {
+			    $content .= '<li class="yoast">no news items, feed might be broken...</li>';
 			} else {
-				$this->postbox('yoastlatest', 'Latest news from Clicky', 'Nothing to say...');
-			}
+			    foreach ( $rss_items as $item ) {
+					$content .= '<li class="yoast">';
+					$content .= '<a class="rsswidget" href="'.esc_url( $item->get_permalink(), $protocolls=null, 'display' ).'">'. htmlentities($item->get_title()) .'</a> ';
+					$content .= '</li>';
+			    }
+			}						
+			$content .= '<li class="rss"><a href="http://yoast.com/feed/">Subscribe with RSS</a></li>';
+			$content .= '<li class="email"><a href="http://yoast.com/email-blog-updates/">Subscribe by email</a></li>';
+			$content .= '</ul>';
+			$this->postbox('yoastlatest', 'Latest news from Clicky', $content);
 		}
 
+		/**
+		 * Donation box
+		 */
+		function donate() {
+			$this->postbox('donate','<strong class="red">Donate $10, $20 or $50!</strong>','<p>This plugin has cost me countless hours of work, if you use it, please donate a token of your appreciation!</p><br/>
+			<form style="margin-left:50px;" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+			<input type="hidden" name="cmd" value="_s-xclick">
+			<input type="hidden" name="hosted_button_id" value="KWQT234DEG7KY">
+			<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+			<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+			</form>');
+		}
+		
 		function text_limit( $text, $limit, $finish = ' [&hellip;]') {
 			if( strlen( $text ) > $limit ) {
 		    	$text = substr( $text, 0, $limit );
