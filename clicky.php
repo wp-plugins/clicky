@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.1.5
+Version: 1.2
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -25,8 +25,8 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 		var $feed 				= 'http://getclicky.com/blog/rss';
 				
 		function meta_box() {
-			add_meta_box('clickyme',$this->shortname,array('Clicky_Admin','clicky_meta_box'),'post','side');
-			add_meta_box('clickyme',$this->shortname,array('Clicky_Admin','clicky_meta_box'),'page','side');
+			add_meta_box('clicky',$this->shortname,array('Clicky_Admin','clicky_meta_box'),'post','side');
+			add_meta_box('clicky',$this->shortname,array('Clicky_Admin','clicky_meta_box'),'page','side');
 		}
 
 		function clicky_admin_warnings() {
@@ -49,31 +49,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			global $post;
 			$options 			= clicky_get_options();
 			$clicky_goal 		= get_post_meta($post->ID,'_clicky_goal',true);
-			$clicky_tweetpost	= get_post_meta($post->ID,'_clicky_tweetpost',true);
 			
-			if ($clicky_tweetpost == '' && $post->post_type == 'post')
-				$clicky_tweetpost = true;
-				
-			if ($options['allow_clickyme_integration']) {
-				if ($post->post_status == 'publish') {
-					$shorturl = clickyme_shorturl($post->ID);
-					echo '<p><strong>'.__('Twitter', 'clicky').'</strong></p>';
-					echo '<p>';
-					_e('The Clicky.me short URL for this post is', 'clicky');
-					echo '<a href="'.$shorturl.'">'.$shorturl.'</a>. <a target="_blank" href="http://twitter.com/home?status='.urlencode($post->post_title.' - '.$shorturl).'">';
-					_e('Tweet this post', 'clicky');
-					echo '</a></p><br/>';
-				} else {
-					if (!$options['auto_tweet']) {
-						echo '<p><strong>'.__('Twitter', 'clicky').'</strong></p>';
-						echo '<p>';
-						_e('This post is not published yet, a short URL will be created for it once the post is published. Do you want it to be tweeted automatically too?', 'clicky');
-						echo '<br/><br/>';
-						echo '<input type="checkbox" name="clicky_tweetpost" '.checked($clicky_tweetpost,true,false).'/> '.__('Tweet post on publish', 'clicky').'</p>';
-						echo '<br/>';
-					}
-				}
-			}
 			echo '<p><strong>'.__('Goal Tracking', 'clicky').'</strong></p>';
 			echo '<p>';
 			printf(__('Clicky can track Goals for you too, %1$sread the documentation here%2$s. To be able to track a goal on this post, you need to specify the goal ID here. Optionally, you can also provide the goal revenue.'),'<a href="http://getclicky.com/stats/goals-setup">','</a>');
@@ -109,14 +85,6 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			$clicky_goal['value'] = $clicky_goal_value;
 			delete_post_meta($pID,'_clicky_goal');
 			add_post_meta($pID,'_clicky_goal',$clicky_goal, true);
-			
-			if ($options['allow_clickyme_integration'] && !$options['auto_tweet']) {
-				delete_post_meta($pID,'_clicky_tweetpost');
-				if (isset($clicky_tweetpost))
-					add_post_meta($pID,'_clicky_tweetpost',true, true);
-				else
-					add_post_meta($pID,'_clicky_tweetpost',false, true);
-			}
 		}
 
 		function register_dashboard_page() {
@@ -145,7 +113,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 						$options[$option_name] = '';
 				}
 				
-				foreach (array('ignore_admin', 'track_names', 'allow_clickyme_integration','auto_tweet') as $option_name) {
+				foreach (array('ignore_admin', 'track_names') as $option_name) {
 					if (isset($_POST[$option_name]))
 						$options[$option_name] = true;
 					else
@@ -221,45 +189,6 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 														
 								$this->postbox('clicky_settings',__('Advanced Settings', 'clicky'), $this->form_table($rows));
 
-								$rows = array();
-								$rows[] = array(
-											'id' => 'allow_clickyme_integration',
-											'label' => __('Allow Clicky.me integration', 'clicky'),
-											'desc' => '',
-											'content' => '<input type="checkbox" '.checked($options['allow_clickyme_integration'],true,false).' name="allow_clickyme_integration" id="allow_clickyme_integration"/>',
-										);
-
-								$rows[] = array(
-											'id' => 'auto_tweet',
-											'label' => __('Auto Tweet', 'clicky'),
-											'desc' => __('No need to check the box on each post, by checking this box, each post get\'s tweeted automatically.', 'clicky'),
-											'content' => '<input type="checkbox" '.checked($options['auto_tweet'],true,false).' name="auto_tweet" id="auto_tweet"/>',
-										);
-
-								$rows[] = array(
-											'id' => 'twitter_username',
-											'label' => __('Twitter username', 'clicky'),
-											'desc' => '',
-											'content' => '<input type="text" value="'.$options['twitter_username'].'" name="twitter_username" id="twitter_username"/>'
-										);
-
-								$rows[] = array(
-											'id' => 'twitter_password',
-											'label' => __('Twitter password', 'clicky'),
-											'desc' => '',
-											'content' => '<input type="password" value="'.$options['twitter_password'].'" name="twitter_password" id="twitter_password"/>'
-										);
-
-								$rows[] = array(
-											'id' => 'twitter_prefix',
-											'label' => __('Prefix for Tweets', 'clicky'),
-											'desc' => __('This text will be put in front of Tweets that are published when a blog post is published', 'clicky'),
-											'content' => '<input type="text" class="text" value="'.$options['twitter_prefix'].'" name="twitter_prefix" id="twitter_prefix"/>'
-										);
-														
-								$this->postbox('clickyme_integration',__('Clicky.me &amp; Twitter Integration', 'clicky'), $content .' '. $this->form_table($rows));
-								
-
 								?>
 								<div class="submit">
 									<input type="submit" class="button-primary" name="submit" value="<?php _e("Update Clicky Settings", 'clicky'); ?> &raquo;" />
@@ -304,85 +233,11 @@ function clicky_defaults() {
 		'site_id' 						=> '',
 		'site_key' 						=> '',
 		'admin_site_key' 				=> '',
-		'twitter_username' 				=> '',
-		'twitter_password' 				=> '',
-		'twitter_prefix'				=> '',
-		'auto_tweet'					=> false,
 		'ignore_admin' 					=> false,
 		'track_names'					=> true,
-		'allow_clickyme_integration' 	=> true,
 	);
 	add_option('clicky',$options);
 }
-
-function clickyme_shorturl($pid) {
-	$shorturl = get_post_meta($post->ID, '_clickyme_url', true);
-	if (!$shorturl) {
-		$options = clicky_get_options();
-		if ( empty($options['site_id']) || empty($options['admin_site_key']) )
-			return false;
-
-		$res = wp_remote_get('http://clicky.me/app/api?site_id='.$options['site_id'].'&sitekey_admin='.$options['admin_site_key'].'&url='.get_permalink($pid)); 
-		if (is_array($res) && $res['response']['code'] == 200) {
-			$shorturl = trim($res['body']);
-			if (preg_match( '#^http://#', $shorturl )) {
-				add_post_meta($post->ID,'_clickyme_url',$shorturl,true);
-				return $shorturl;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
-	return $shorturl;
-}
-
-function publish_tweet($pid) {
-	$options 	= clicky_get_options();
-	if (!$options['allow_clickyme_integration'] || $options['twitter_username'] == "" || $options['twitter_password'] == "")
-		return false;
-	
-	// Check if post has to be tweeted, if not, return false, else make sure it doesn't get tweeted twice.
-	$clicky_tweetpost = get_post_meta($pid,'_clicky_tweetpost',true);
-
-	if (!$options['auto_tweet'] && !$clicky_tweetpost) {
-		return false;
-	} else {
-		delete_post_meta($pid,'_clicky_tweetpost');
-		add_post_meta($pid,'_clicky_tweetpost',false, true);
-	}
-		
-	$shorturl 		= clickyme_shorturl( $pid );
-	if (!$shorturl) {
-		// Short URL creation went wrong, make sure it tries again next time and bail.
-		delete_post_meta($pid,'_clicky_tweetpost');
-		add_post_meta($pid,'_clicky_tweetpost',true,true);		
-		return false;
-	}
-	$su_length		= strlen( $shorturl );
-	$status 		= trim( $options['twitter_prefix'] ).' '.get_the_title( $pid ).' -';
-
-	// Make sure the tweet message isn't too long, so make sure the shorturl fits
-	$max = 139 - $su_length;
-	if ( strlen( $status ) > $max ) {
-		$status = substr( 0, $max, $status );
-	}
-	$status .= ' '.$shorturl;
-
-	$headers = array( 'Authorization' => 'Basic '.base64_encode($options['twitter_username'].":".$options['twitter_password']) );
-	$request = new WP_Http;
-	$result = $request->request( 
-		'http://twitter.com/statuses/update.xml' , 
-		array( 
-			'method' => 'POST', 
-			'body' => array('status' => $status), 
-			'headers' => $headers )
-		);
-	return $result;
-}
-add_action('publish_post','publish_tweet');
-add_action('publish_page','publish_tweet');
 
 function clicky_script() {
 	$options = clicky_get_options();
@@ -440,7 +295,7 @@ function clicky_script() {
 		var s = document.createElement('script');
 		s.type = 'text/javascript';
 		s.async = true;
-		s.src = ( document.location.protocol == 'https:' ? 'https://static.getclicky.com' : 'http://static.getclicky.com' ) + '/js';
+		s.src = ( document.location.protocol == 'https:' ? 'https://in.getclicky.com' : 'http://in.getclicky.com' ) + '/js';
 		( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 	})();
 </script>
@@ -460,7 +315,7 @@ function clicky_log( $a ) {
 	if( !in_array( $type, array( "pageview", "download", "outbound", "click", "custom", "goal" ))) 
 		$type = "pageview";
 
-	$file = "http://static.getclicky.com/in.php?site_id=".$options['site_id']."&sitekey_admin=".$options['admin_site_key']."&type=".$type;
+	$file = "http://in.getclicky.com/in.php?site_id=".$options['site_id']."&sitekey_admin=".$options['admin_site_key']."&type=".$type;
 
 	# referrer and user agent - will only be logged if this is the very first action of this session
 	if( $a['ref'] ) 
