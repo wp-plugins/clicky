@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.2
+Version: 1.2.1
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -10,7 +10,7 @@ Author URI: http://yoast.com/
 
 load_plugin_textdomain('clicky','','/clicky/lang/');
 
-if ( ! class_exists( 'Clicky_Admin' ) ) {
+if ( is_admin() && ! class_exists( 'Clicky_Admin' ) ) {
 
 	require_once('yst_plugin_tools.php');
 	
@@ -202,8 +202,10 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 						<div class="meta-box-sortables">
 							<?php
 								$this->plugin_like('clicky');
+								$this->donate();
 								$this->plugin_support('clicky');
 								$this->news(); 
+								
 							?>
 						</div>
 						<br/><br/><br/>
@@ -392,5 +394,3 @@ function clicky_track_comment($commentID, $comment_status) {
 	}
 }
 add_action('comment_post','clicky_track_comment',10,2);
-
-?>
