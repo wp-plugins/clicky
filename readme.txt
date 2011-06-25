@@ -19,6 +19,8 @@ Integrates the [Clicky web analytics](http://getclicky.com/145844) service into 
 * Option to track posts &amp; pages as goals and assign a revenue to that page or post.
 * An overview of your site's statistics on your dashboard.
 
+Read the authors [review of Clicky Analytics](http://yoast.com/clicky-analytics-review/) if you want to see a bit more of the cool integration this plugin provides.
+
 == Installation ==
 
 1. Upload the `clicky` folder to the `/wp-content/plugins/` directory
