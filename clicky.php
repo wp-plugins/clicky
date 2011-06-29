@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.2.1
+Version: 1.2.2
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -297,7 +297,7 @@ function clicky_script() {
 		var s = document.createElement('script');
 		s.type = 'text/javascript';
 		s.async = true;
-		s.src = ( document.location.protocol == 'https:' ? 'https://in.getclicky.com' : 'http://in.getclicky.com' ) + '/js';
+		s.src = ( document.location.protocol == 'https:' ? 'https://static.getclicky.com' : 'http://static.getclicky.com' ) + '/js';
 		( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 	})();
 </script>
