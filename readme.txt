@@ -4,7 +4,7 @@ Donate link: http://yoast.com/donate/
 Tags: analytics, statistics, clicky, getclicky
 Requires at least: 2.8
 Tested up to: 3.2
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 
 Integrates the Clicky (from getClicky.com) web analytics service into your blog.
 
@@ -34,6 +34,11 @@ Read the authors [review of Clicky Analytics](http://yoast.com/clicky-analytics-
 2. The Clicky metabox on posts and pages.
 
 == Changelog ==
+
+= 1.2.3 =
+
+* No longer track preview pages.
+* Made the tracking code a bit simpler.
 
 = 1.2.2 =
 
