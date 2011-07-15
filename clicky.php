@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.2.1
+Version: 1.2.3
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -244,6 +244,9 @@ function clicky_defaults() {
 function clicky_script() {
 	$options = clicky_get_options();
 	
+	if ( is_preview() )
+		return;
+		
 	// Bail early if current user is admin and ignore admin is true
 	if( $options['ignore_admin'] && current_user_can("manage_options") ) {
 		echo "\n<!-- ".__("Clicky tracking not shown because you're an administrator and you've configured Clicky to ignore administrators.", 'clicky')." -->\n";
@@ -295,9 +298,8 @@ function clicky_script() {
 	var clicky_site_id = <?php echo $options['site_id']; ?>;
 	(function() {
 		var s = document.createElement('script');
-		s.type = 'text/javascript';
-		s.async = true;
-		s.src = ( document.location.protocol == 'https:' ? 'https://in.getclicky.com' : 'http://in.getclicky.com' ) + '/js';
+		s.type = 'text/javascript'; s.async = true;
+		s.src = '//static.getclicky.com/js';
 		( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 	})();
 </script>

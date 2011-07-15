@@ -1,29 +1,32 @@
 === Clicky by Yoast ===
 Contributors: joostdevalk
 Donate link: http://yoast.com/donate/
-Tags: analytics, statistics, clicky
+Tags: analytics, statistics, clicky, getclicky
 Requires at least: 2.8
 Tested up to: 3.2
-Stable tag: 1.2.1
+Stable tag: 1.2.3
 
-Integrates the Clicky (aka getClicky) web analytics service into your blog.
+Integrates the Clicky (from getClicky.com) web analytics service into your blog.
 
 == Description ==
 
 Integrates the [Clicky web analytics](http://getclicky.com/145844) service into your blog.
 
-* Automatically adding your Clicky tracking code everywhere.
+* Automatically adding your Clicky (from getClicky.com) tracking code everywhere.
 * Option to ignore admins.
 * Option to store names of commenters.
+* Stores comments as an action using the getClicky [internal data logging API](https://secure.getclicky.com/help/customization/manual#internal). This requires a [pro account](http://getclicky.com/145844) to work.
 * Option to track posts &amp; pages as goals and assign a revenue to that page or post.
 * An overview of your site's statistics on your dashboard.
+
+Read the authors [review of Clicky Analytics](http://yoast.com/clicky-analytics-review/) if you want to see a bit more of the cool integration this plugin provides.
 
 == Installation ==
 
 1. Upload the `clicky` folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Enter your Site ID, Key and Admin Key.
-1. You're done.
+1. You're done, getClicky should start working.
 
 == Screenshots ==
 
@@ -31,6 +34,15 @@ Integrates the [Clicky web analytics](http://getclicky.com/145844) service into 
 2. The Clicky metabox on posts and pages.
 
 == Changelog ==
+
+= 1.2.3 =
+
+* No longer track preview pages.
+* Made the tracking code a bit simpler.
+
+= 1.2.2 =
+
+* Fixed error in pointing the script to in.getclicky.com instead of static.getclicky.com.
 
 = 1.2.1 =
 
