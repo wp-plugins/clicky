@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.2.1
+Version: 1.3
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -106,7 +106,7 @@ if ( is_admin() && ! class_exists( 'Clicky_Admin' ) ) {
 				if (!current_user_can('manage_options')) die(__('You cannot edit the Clicky settings.', 'clicky'));
 				check_admin_referer('clicky-config');
 			
-				foreach (array('site_id', 'site_key', 'admin_site_key', 'twitter_username', 'twitter_password', 'twitter_prefix') as $option_name) {
+				foreach (array('site_id', 'site_key', 'admin_site_key', 'outbound_pattern') as $option_name) {
 					if (isset($_POST[$option_name]))
 						$options[$option_name] = $_POST[$option_name];
 					else
@@ -187,6 +187,13 @@ if ( is_admin() && ! class_exists( 'Clicky_Admin' ) ) {
 											'content' => '<input type="checkbox" '.checked($options['track_names'],true,false).' name="track_names" id="track_names"/>'
 										);
 														
+								$rows[] = array(
+											'id' => 'outbound_pattern',
+											'label' => __('Outbound Link Pattern', 'clicky'),
+											'desc' => sprintf( __('If your site uses redirects for outbound links, instead of links that point directly to their external source (this is popular with affiliate links, for example), then you\'ll need to use this variable to tell our tracking code additional patterns to look for when automatically tracking outbound links. %1$sRead more here%1$s.','clicky'), '<a href="https://secure.getclicky.com/helpy?type=customization#outbound_pattern">', '</a>'),
+											'content' => '<input class="text" type="text" value="'.$options['outbound_pattern'].'" name="outbound_pattern" id="outbound_pattern"/> '.__('For instance: <code>/out/,/go/</code>','clicky'),
+										);
+								
 								$this->postbox('clicky_settings',__('Advanced Settings', 'clicky'), $this->form_table($rows));
 
 								?>
@@ -235,6 +242,7 @@ function clicky_defaults() {
 		'site_id' 						=> '',
 		'site_key' 						=> '',
 		'admin_site_key' 				=> '',
+		'outbound_pattern'				=> '',
 		'ignore_admin' 					=> false,
 		'track_names'					=> true,
 	);
@@ -244,6 +252,9 @@ function clicky_defaults() {
 function clicky_script() {
 	$options = clicky_get_options();
 	
+	if ( is_preview() )
+		return;
+		
 	// Bail early if current user is admin and ignore admin is true
 	if( $options['ignore_admin'] && current_user_can("manage_options") ) {
 		echo "\n<!-- ".__("Clicky tracking not shown because you're an administrator and you've configured Clicky to ignore administrators.", 'clicky')." -->\n";
@@ -258,19 +269,19 @@ function clicky_script() {
 	// Track commenter name if track_names is true
 	if( $options['track_names'] ) { 
 ?>
-	<script type='text/javascript'>
-	function clicky_gc( name ) {
-		var ca = document.cookie.split(';');
-		for( var i in ca ) {
-			if( ca[i].indexOf( name+'=' ) != -1 )
-				return decodeURIComponent( ca[i].split('=')[1] );
-		}
-		return '';
+<script type='text/javascript'>
+function clicky_gc( name ) {
+	var ca = document.cookie.split(';');
+	for( var i in ca ) {
+		if( ca[i].indexOf( name+'=' ) != -1 )
+			return decodeURIComponent( ca[i].split('=')[1] );
 	}
-	var clicky_custom_session = { 
-		username: clicky_gc( 'comment_author_<?php echo md5( get_option("siteurl") ); ?>' )
-	};
-  	</script>
+	return '';
+}
+var clicky_custom_session = { 
+	username: clicky_gc( 'comment_author_<?php echo md5( get_option("siteurl") ); ?>' )
+};
+	</script>
 <?php
 	}
 	
@@ -288,6 +299,22 @@ function clicky_script() {
 		}
 	}
 	
+	if ( isset( $options['outbound_pattern'] ) && trim( $options['outbound_pattern'] ) != '' ) {
+		$patterns = explode( ',', $options['outbound_pattern'] );
+		$pattern = '';
+		foreach ( $patterns as $pat ) {
+			if ( $pattern != '' )
+				$pattern .= ',';
+			$pat = trim( str_replace( '"', '', str_replace( "'", "", $pat ) ) );
+			$pattern .= "'".$pat."'";
+		}
+		?>
+<script type="text/javascript">
+var clicky_custom = {};
+clicky_custom.outbound_pattern = [<?php echo $pattern; ?>];
+</script>
+<?php
+	}
 	// Display the script
 ?>
 <script type="text/javascript">
@@ -295,9 +322,8 @@ function clicky_script() {
 	var clicky_site_id = <?php echo $options['site_id']; ?>;
 	(function() {
 		var s = document.createElement('script');
-		s.type = 'text/javascript';
-		s.async = true;
-		s.src = ( document.location.protocol == 'https:' ? 'https://in.getclicky.com' : 'http://in.getclicky.com' ) + '/js';
+		s.type = 'text/javascript'; s.async = true;
+		s.src = '//static.getclicky.com/js';
 		( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
 	})();
 </script>
