@@ -260,18 +260,7 @@ msgstr ""
 msgid "Clicky for WordPress"
 msgstr ""
 
-#. Plugin URI of an extension
-msgid "http://getclicky.com/goodies/#wordpress"
-msgstr ""
-
 #. Description of an extension
 msgid "Integrates Clicky on your blog!"
 msgstr ""
 
-#. Author of an extension
-msgid "Joost de Valk"
-msgstr ""
-
-#. Author URI of an extension
-msgid "http://yoast.com/"
-msgstr ""

@@ -3,8 +3,8 @@ Contributors: joostdevalk
 Donate link: http://yoast.com/donate/
 Tags: analytics, statistics, clicky, getclicky
 Requires at least: 2.8
-Tested up to: 3.2
-Stable tag: 1.2.3
+Tested up to: 3.3
+Stable tag: 1.3
 
 Integrates the Clicky (from getClicky.com) web analytics service into your blog.
 
@@ -34,6 +34,10 @@ Read the authors [review of Clicky Analytics](http://yoast.com/clicky-analytics-
 2. The Clicky metabox on posts and pages.
 
 == Changelog ==
+
+= 1.3 =
+
+* Added support for the new [outbound link pattern matching](http://getclicky.com/blog/287/custom-outbound-link-pattern-matching-and-iframe-tracking).
 
 = 1.2.3 =
 
