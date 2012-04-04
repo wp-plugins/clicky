@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.4.1
+Version: 1.4.1.1
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -68,7 +68,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			add_action( 'admin_print_styles', array( &$this,'config_page_styles' ) );	
 			
 			add_action( 'admin_menu', array( &$this, 'meta_box' ) );
-			add_action( 'publish_post', array( &$this, 'clicky_insert_post' ) ;
+			add_action( 'publish_post', array( &$this, 'clicky_insert_post' ) );
 			
 			add_action( 'wp_head', array( &$this, 'stats_admin_bar_head') );
 			
