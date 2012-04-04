@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.3
+Version: 1.4.1
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -10,7 +10,7 @@ Author URI: http://yoast.com/
 
 load_plugin_textdomain('clicky','','/clicky/lang/');
 
-if ( is_admin() && ! class_exists( 'Clicky_Admin' ) ) {
+if ( ! class_exists( 'Clicky_Admin' ) ) {
 
 	require_once('yst_plugin_tools.php');
 	
@@ -19,14 +19,13 @@ if ( is_admin() && ! class_exists( 'Clicky_Admin' ) ) {
 		var $hook 				= 'clicky';
 		var $longname			= 'Clicky Configuration';
 		var $shortname			= 'Clicky';
-		var $shorturl_service	= 'Clicky.me';
-		var $filename			= 'clicky/clicky.php';
-		var $homepage			= 'http://getclicky.com/goodies/';
+		var $homepage			= 'http://yoast.com/wordpress/clicky/';
 		var $feed 				= 'http://getclicky.com/blog/rss';
 				
 		function meta_box() {
-			add_meta_box('clicky',$this->shortname,array('Clicky_Admin','clicky_meta_box'),'post','side');
-			add_meta_box('clicky',$this->shortname,array('Clicky_Admin','clicky_meta_box'),'page','side');
+			foreach ( get_post_types() as $pt ) {
+				add_meta_box('clicky',__('Clicky Goal Tracking', 'clicky'),array('Clicky_Admin','clicky_meta_box'), $pt,'side');
+			}
 		}
 
 		function clicky_admin_warnings() {
@@ -50,9 +49,8 @@ if ( is_admin() && ! class_exists( 'Clicky_Admin' ) ) {
 			$options 			= clicky_get_options();
 			$clicky_goal 		= get_post_meta($post->ID,'_clicky_goal',true);
 			
-			echo '<p><strong>'.__('Goal Tracking', 'clicky').'</strong></p>';
 			echo '<p>';
-			printf(__('Clicky can track Goals for you too, %1$sread the documentation here%2$s. To be able to track a goal on this post, you need to specify the goal ID here. Optionally, you can also provide the goal revenue.'),'<a href="http://getclicky.com/stats/goals-setup">','</a>');
+			printf(__('Clicky can track Goals for you too, %1$sread the documentation here%2$s. To be able to track a goal on this post, you need to specify the goal ID here. Optionally, you can also provide the goal revenue.', 'clicky'),'<a href="http://getclicky.com/stats/goals-setup">','</a>');
 			echo '</p>';
 			echo '<table>';
 			echo '<tr><th style="text-align:left;"><label for="clicky_goal_id">'.__('Goal ID', 'clicky').':</label></th><td><input type="text" name="clicky_goal_id" id="clicky_goal_id" value="'.$clicky_goal['id'].'"/></td></tr>';
@@ -61,17 +59,18 @@ if ( is_admin() && ! class_exists( 'Clicky_Admin' ) ) {
 		}
 		
 		function Clicky_Admin() {
-			add_action( 'admin_menu', array(&$this, 'register_settings_page') );
-			add_action( 'admin_menu', array(&$this, 'register_dashboard_page') );
+			add_action( 'admin_menu', array( &$this, 'register_settings_page' ) );
+			add_action( 'admin_menu', array( &$this, 'register_dashboard_page' ) );
 			
-			add_filter( 'plugin_action_links', array(&$this, 'add_action_link'), 10, 2 );
-			add_filter( 'ozh_adminmenu_icon', array(&$this, 'add_ozh_adminmenu_icon' ) );				
+			add_filter( 'plugin_action_links', array( &$this, 'add_action_link' ), 10, 2 );
+			add_filter( 'ozh_adminmenu_icon', array( &$this, 'add_ozh_adminmenu_icon' ) );				
 			
-			add_action('admin_print_scripts', array(&$this,'config_page_scripts'));
-			add_action('admin_print_styles', array(&$this,'config_page_styles'));	
+			add_action( 'admin_print_styles', array( &$this,'config_page_styles' ) );	
 			
-			add_action('admin_menu', array(&$this,'meta_box'));
-			add_action('publish_post', array(&$this,'clicky_insert_post'));
+			add_action( 'admin_menu', array( &$this, 'meta_box' ) );
+			add_action( 'publish_post', array( &$this, 'clicky_insert_post' ) ;
+			
+			add_action( 'wp_head', array( &$this, 'stats_admin_bar_head') );
 			
 			$this->clicky_admin_warnings();
 		}
@@ -176,7 +175,7 @@ if ( is_admin() && ! class_exists( 'Clicky_Admin' ) ) {
 								$rows[] = array(
 											'id' => 'ignore_admin',
 											'label' => __('Ignore Admin users', 'clicky'),
-											'desc' => __('If you are using a caching plugin, such as WP-Supercache, please ensure that you have it configured to NOT use the cache for logged in users. Otherwise, admin users <em>will still</em> be tracked.', 'clicky'),
+											'desc' => __('If you are using a caching plugin, such as W3 Total Cache or WP-Supercache, please ensure that you have it configured to NOT use the cache for logged in users. Otherwise, admin users <em>will still</em> be tracked.', 'clicky'),
 											'content' => '<input type="checkbox" '.checked($options['ignore_admin'],true,false).' name="ignore_admin" id="ignore_admin"/>',
 										);
 
@@ -208,11 +207,10 @@ if ( is_admin() && ! class_exists( 'Clicky_Admin' ) ) {
 					<div class="metabox-holder">	
 						<div class="meta-box-sortables">
 							<?php
-								$this->plugin_like('clicky');
 								$this->donate();
-								$this->plugin_support('clicky');
+								$this->plugin_support();
+								$this->yoast_news(); 
 								$this->news(); 
-								
 							?>
 						</div>
 						<br/><br/><br/>
@@ -221,6 +219,125 @@ if ( is_admin() && ! class_exists( 'Clicky_Admin' ) ) {
 			</div>
 <?php		
 			}
+			
+			function stats_admin_bar_head() {
+//				if ( function_exists( 'is_admin_bar_showing' ) && !is_admin_bar_showing() ) {
+//					return;
+//				}
+			
+				add_action( 'admin_bar_menu', array(&$this, 'stats_admin_bar_menu'), 1200 );
+				?>
+			
+			<style type='text/css'>
+			#wpadminbar .quicklinks li#wp-admin-bar-stats {height:28px}
+			#wpadminbar .quicklinks li#wp-admin-bar-stats a {height:28px;padding:0}
+			#wpadminbar .quicklinks li#wp-admin-bar-stats a img {padding:4px 5px; height: 20px; width: 99px;
+			}
+			</style>
+			<?php
+			}
+			
+			function stats_admin_bar_menu( &$wp_admin_bar ) {
+				$options = clicky_get_options();
+				
+				$img_src = $this->create_graph();	
+			
+				$url = 'https://secure.getclicky.com/stats/?site_id='.$options['site_id'];
+				
+				$title = __( 'Visitors over 48 hours. Click for more Clicky Site Stats.', 'clicky' );
+			
+				$menu = array( 'id' => 'stats', 'title' => "<img width='99' height='20' src='$img_src' alt='$title' title='$title' />", 'href' => $url );
+			
+				$wp_admin_bar->add_menu( $menu );
+			}
+			
+			function create_graph() {
+				$options = clicky_get_options();
+				
+				$resp = wp_remote_get("http://api.getclicky.com/api/stats/4?site_id=".$options['site_id']."&sitekey=".$options['site_key']."&type=visitors&hourly=1&date=last-3-days");
+			
+				if ( !isset($resp['response']['code']) || $resp['response']['code'] != 200 )
+					return;
+					
+				$xml = simplexml_load_string( $resp['body'] );
+				
+				$i=0;
+				$j=0;
+				$k=0;
+				$values=array();
+				foreach($xml->type->date as $value)
+				{
+					foreach($xml->type->date[$i]->item->value as $art)//nested loop for multiple values in tag
+								{
+				
+								$data=(int)($xml->type->date[$i]->item->value[$j]);//$i and $j is used to iterate multiples of both tags respectively
+								array_push($values,$data);						
+								$j=$j+1;		 
+								$k++;
+								if ($k == 48)
+									break 2;
+								}
+						$j=0; //so that in next item it starts from 0(zero)
+						$i++;
+				}
+				if ( count($values) == 0 ) {
+					return;
+				}
+				$values = array_reverse($values);
+				 //-----------------------------------------------------------------------------------------------------------------------------
+				//for graph  
+			    $img_width=99;
+				$img_height=20; 
+				$margins=0;
+			
+			 
+				# ---- Find the size of graph by substracting the size of borders
+				$graph_width=$img_width - $margins * 2;
+				$graph_height=$img_height - $margins * 2; 
+				$img=imagecreate($img_width,$img_height);
+			
+			 
+				$bar_width=0.01;
+				$total_bars=count($values);
+				$gap= ($graph_width- $total_bars * $bar_width ) / ($total_bars +1);
+			 
+				# -------  Define Colors ----------------
+				$bar_color=imagecolorallocate($img,220,220,220);
+				
+				$black = imagecolorallocate($img, 0, 0, 0);
+				$background_color=imagecolortransparent($img, $black);
+				$border_color=imagecolorallocate($img,50,50,50);
+			 
+				# ------ Create the border around the graph ------
+			
+				imagefilledrectangle($img,1,1,$img_width-2,$img_height-2,$border_color);
+				imagefilledrectangle($img,$margins,$margins,$img_width-1-$margins,$img_height-1-$margins,$background_color);
+			 
+				# ------- Max value is required to adjust the scale	-------
+				$max_value=max($values);
+				$ratio= $graph_height/$max_value;
+			
+			
+				# ----------- Draw the bars here ------
+				for($i=0;$i< $total_bars; $i++)
+				{ 
+					# ------ Extract key and value pair from the current pointer position
+					list($key,$value)=each($values); 
+					$x1= $margins + $gap + $i * ($gap+$bar_width) ;
+					$x2= $x1 + $bar_width; 
+					$y1=$margins +$graph_height- intval($value * $ratio) ;
+					$y2=$img_height-$margins;
+					imagefilledrectangle($img,$x1,$y1,$x2,$y2,$bar_color);
+				}
+				
+				ob_start();
+				imagepng($img);
+				$image = ob_get_contents();
+				ob_end_clean();
+				
+				return 'data:image/png;base64,'.base64_encode($image);
+			}
+		
 	}
 	$clicky_admin = new Clicky_Admin();
 }

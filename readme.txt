@@ -1,10 +1,10 @@
 === Clicky by Yoast ===
 Contributors: joostdevalk
 Donate link: http://yoast.com/donate/
-Tags: analytics, statistics, clicky, getclicky
+Tags: analytics, statistics, clicky, getclicky, affiliate, outbound links, analysis, Joost de Valk, Yoast
 Requires at least: 2.8
 Tested up to: 3.3
-Stable tag: 1.3
+Stable tag: 1.4.1
 
 Integrates the Clicky (from getClicky.com) web analytics service into your blog.
 
@@ -18,6 +18,8 @@ Integrates the [Clicky web analytics](http://getclicky.com/145844) service into 
 * Stores comments as an action using the getClicky [internal data logging API](https://secure.getclicky.com/help/customization/manual#internal). This requires a [pro account](http://getclicky.com/145844) to work.
 * Option to track posts &amp; pages as goals and assign a revenue to that page or post.
 * An overview of your site's statistics on your dashboard.
+* Easily add outbound link pattern matching for affiliate links etc.
+* Adds a small stats indicator of visitors in the last 48 to the WordPress toolbar.
 
 Read the authors [review of Clicky Analytics](http://yoast.com/clicky-analytics-review/) if you want to see a bit more of the cool integration this plugin provides.
 
@@ -32,8 +34,22 @@ Read the authors [review of Clicky Analytics](http://yoast.com/clicky-analytics-
 
 1. The Clicky WordPress plugin settings panel.
 2. The Clicky metabox on posts and pages.
+3. The stats indicator on the WordPress Toolbar.
 
 == Changelog ==
+
+= 1.4.1 =
+
+* Forgot to remove a piece of code that's no longer used.
+
+= 1.4 =
+
+* Interface cleanup, interface no longer breaks on smaller resolutions. 
+* No more unneeded JavaScript being loaded on the admin pages.
+* Made the Goal Tracking box work for all post types and made it smaller.
+* Removed some code that was no longer used.
+* Removed dashboard widget, added Yoast news widget to settings page.
+* Added a small stats indicator of visitors in the last 48 to the WordPress toolbar.
 
 = 1.3 =
 
