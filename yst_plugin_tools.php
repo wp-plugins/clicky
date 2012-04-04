@@ -16,16 +16,6 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 		var $homepage	= '';
 		var $accesslvl	= 'manage_options';
 		
-		function Yoast_Plugin_Admin() {
-			add_action( 'admin_menu', array(&$this, 'register_settings_page') );
-			add_filter( 'plugin_action_links', array(&$this, 'add_action_link'), 10, 2 );
-			
-			add_action('admin_print_scripts', array(&$this,'config_page_scripts'));
-			add_action('admin_print_scripts', array(&$this,'config_page_styles'));	
-			
-			add_action('wp_dashboard_setup', array(&$this,'widget_setup'));	
-		}
-		
 		function config_page_styles() {
 			if (isset($_GET['page']) && $_GET['page'] == $this->hook) {
 				wp_enqueue_style('clicky-admin-css', WP_CONTENT_URL . '/plugins/' . plugin_basename(dirname(__FILE__)). '/yst_plugin_tools.css');
