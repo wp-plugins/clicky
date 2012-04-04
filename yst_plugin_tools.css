@@ -1,7 +1,7 @@
 td.yst_desc {
 	font-weight: normal;
 	font-size: 12px;
-	line-height: 12px;
+	line-height: 130%;
 	color:#777;	
 }
 
@@ -23,7 +23,6 @@ div.inside ul li {
 }
 
 div.inside a, div.inside a.rsswidget {
-	font-family: 'Lucida Grande', Verdana, Arial, 'Bitstream Vera Sans', sans-serif;
 	text-decoration: none;
 }
 div.inside a:hover, div.inside a.rsswidget:hover {
@@ -31,6 +30,18 @@ div.inside a:hover, div.inside a.rsswidget:hover {
 }
 div.inside ul li.rss {
 	list-style-image: url(images/rss.png);
+}
+
+div.inside ul li.twitter {
+	list-style-image: url(images/twitter-icon.png);
+}
+
+div.inside ul li.facebook {
+	list-style-image: url(images/facebook-icon.png);
+}
+
+div.inside ul li.googleplus {
+	list-style-image: url(images/google-plus-icon.png);
 }
 
 div.inside ul li.email {
@@ -41,7 +52,7 @@ div.inside ul li.yoast {
 	list-style-image: url(images/yoast-16x16.png); 
 }
 
-.text {
+.text, .select {
 	width: 250px;
 }
 
@@ -59,7 +70,7 @@ div.inside ul li.yoast {
 }
 
 .side .postbox p, .side .postbox a, .side .postbox a.rsswidget {
-	font-size: 11px;
+	font-size: 13px;
 }
 
 div.inside .button:hover, div.inside .button-primary:hover {
@@ -74,9 +85,15 @@ div.inside .button:hover, div.inside .button-primary:hover {
 	border-color: green;
 	border-width: 2px;
 }
-
 strong.red {
 	color: green;
 	font-weight: bold;
 	font-size: 105%;
+}
+.postbox {
+	margin: 0 10px 10px 0;
+}
+
+.postbox .hndle {
+	cursor: default;
 }
