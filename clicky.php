@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.4.1.1
+Version: 1.4.1.2
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -63,7 +63,6 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			add_action( 'admin_menu', array( &$this, 'register_dashboard_page' ) );
 			
 			add_filter( 'plugin_action_links', array( &$this, 'add_action_link' ), 10, 2 );
-			add_filter( 'ozh_adminmenu_icon', array( &$this, 'add_ozh_adminmenu_icon' ) );				
 			
 			add_action( 'admin_print_styles', array( &$this,'config_page_styles' ) );	
 			
@@ -315,6 +314,8 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			 
 				# ------- Max value is required to adjust the scale	-------
 				$max_value=max($values);
+				if ($max_value == 0)
+					$max_value = 1;
 				$ratio= $graph_height/$max_value;
 			
 			
