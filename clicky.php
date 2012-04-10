@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.4.1.2
+Version: 1.4.1.3
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -220,17 +220,13 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			}
 			
 			function stats_admin_bar_head() {
-//				if ( function_exists( 'is_admin_bar_showing' ) && !is_admin_bar_showing() ) {
-//					return;
-//				}
-			
 				add_action( 'admin_bar_menu', array(&$this, 'stats_admin_bar_menu'), 1200 );
 				?>
 			
 			<style type='text/css'>
-			#wpadminbar .quicklinks li#wp-admin-bar-stats {height:28px}
-			#wpadminbar .quicklinks li#wp-admin-bar-stats a {height:28px;padding:0}
-			#wpadminbar .quicklinks li#wp-admin-bar-stats a img {padding:4px 5px; height: 20px; width: 99px;
+			#wpadminbar .quicklinks li#wp-admin-bar-clickystats {height:28px}
+			#wpadminbar .quicklinks li#wp-admin-bar-clickystats a {height:28px;padding:0}
+			#wpadminbar .quicklinks li#wp-admin-bar-clickystats a img {padding:4px 5px; height: 20px; width: 99px;
 			}
 			</style>
 			<?php
@@ -245,7 +241,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 				
 				$title = __( 'Visitors over 48 hours. Click for more Clicky Site Stats.', 'clicky' );
 			
-				$menu = array( 'id' => 'stats', 'title' => "<img width='99' height='20' src='$img_src' alt='$title' title='$title' />", 'href' => $url );
+				$menu = array( 'id' => 'clickystats', 'title' => "<img width='99' height='20' src='$img_src' alt='$title' title='$title' />", 'href' => $url );
 			
 				$wp_admin_bar->add_menu( $menu );
 			}
@@ -255,7 +251,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 				
 				$resp = wp_remote_get("http://api.getclicky.com/api/stats/4?site_id=".$options['site_id']."&sitekey=".$options['site_key']."&type=visitors&hourly=1&date=last-3-days");
 			
-				if ( !isset($resp['response']['code']) || $resp['response']['code'] != 200 )
+				if ( is_wp_error($resp) || !isset($resp['response']['code']) || $resp['response']['code'] != 200 )
 					return;
 					
 				$xml = simplexml_load_string( $resp['body'] );

@@ -4,7 +4,7 @@ Donate link: http://yoast.com/donate/
 Tags: analytics, statistics, clicky, getclicky, affiliate, outbound links, analysis, Joost de Valk, Yoast
 Requires at least: 2.8
 Tested up to: 3.3
-Stable tag: 1.4.1.2
+Stable tag: 1.4.1.3
 
 Integrates the Clicky (from getClicky.com) web analytics service into your blog.
 
@@ -37,6 +37,10 @@ Read the authors [review of Clicky Analytics](http://yoast.com/clicky-analytics-
 3. The stats indicator on the WordPress Toolbar.
 
 == Changelog ==
+
+= 1.4.1.3 =
+
+* Fix for another "possible" error.
 
 = 1.4.1.2 =
 
