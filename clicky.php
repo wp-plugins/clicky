@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.4.1.3
+Version: 1.4.2
 Plugin URI: http://getclicky.com/goodies/#wordpress
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
