@@ -111,7 +111,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 						$options[$option_name] = '';
 				}
 				
-				foreach (array('ignore_admin', 'track_names') as $option_name) {
+				foreach (array('ignore_admin', 'track_names','cookies_disable') as $option_name) {
 					if (isset($_POST[$option_name]))
 						$options[$option_name] = true;
 					else
@@ -176,6 +176,13 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 											'label' => __('Ignore Admin users', 'clicky'),
 											'desc' => __('If you are using a caching plugin, such as W3 Total Cache or WP-Supercache, please ensure that you have it configured to NOT use the cache for logged in users. Otherwise, admin users <em>will still</em> be tracked.', 'clicky'),
 											'content' => '<input type="checkbox" '.checked($options['ignore_admin'],true,false).' name="ignore_admin" id="ignore_admin"/>',
+										);
+										
+								$rows[] = array(
+											'id' => 'cookies_disable',
+											'label' => __('Disable cookies', 'clicky'),
+											'desc' => __('If you don\'t want your site to use cookies, check this button. By doing so, uniques will instead be determined based on their IP address.', 'clicky'),
+											'content' => '<input type="checkbox" '.checked($options['cookies_disable'],true,false).' name="cookies_disable" id="cookies_disable"/>',
 										);
 
 								$rows[] = array(
@@ -359,6 +366,7 @@ function clicky_defaults() {
 		'outbound_pattern'				=> '',
 		'ignore_admin' 					=> false,
 		'track_names'					=> true,
+		'cookies_disable'				=> false,
 	);
 	add_option('clicky',$options);
 }
@@ -376,9 +384,9 @@ function clicky_script() {
 	}
 			
 
-	// Branding
+	// Debug
 ?>
-<!-- Clicky Web Analytics - http://getclicky.com, WordPress Plugin by Yoast - http://yoast.com -->
+<!-- Clicky Web Analytics - http://getclicky.com, WordPress Plugin by Yoast - http://yoast.com/wordpress/clicky/ -->
 <?php
 	// Track commenter name if track_names is true
 	if( $options['track_names'] ) { 
@@ -422,15 +430,17 @@ var clicky_custom_session = {
 			$pat = trim( str_replace( '"', '', str_replace( "'", "", $pat ) ) );
 			$pattern .= "'".$pat."'";
 		}
+		$clicky_extra .= 'clicky_custom.outbound_pattern = ['.$pattern.'];'."\n";
+	}
+
+	if ( isset( $options['cookies_disable'] ) && $options['cookies_disable'] ) {
+		$clicky_extra .= "clicky_custom.cookies_disable = 1;\n";
+	}
 		?>
 <script type="text/javascript">
 var clicky_custom = {};
-clicky_custom.outbound_pattern = [<?php echo $pattern; ?>];
+<?php echo $clicky_extra; ?>
 </script>
-<?php
-	}
-	// Display the script
-?>
 <script type="text/javascript">
 	var clicky = { log: function(){ return; }, goal: function(){ return; }};
 	var clicky_site_id = <?php echo $options['site_id']; ?>;
