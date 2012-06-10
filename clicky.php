@@ -2,7 +2,7 @@
 /*
 Plugin Name: Clicky for WordPress
 Version: 1.4.2
-Plugin URI: http://getclicky.com/goodies/#wordpress
+Plugin URI: http://yoast.com/wordpress/clicky/
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
 Author URI: http://yoast.com/
