@@ -15,6 +15,7 @@ Integrates the [Clicky web analytics](http://getclicky.com/145844) service into 
 * Automatically adding your Clicky (from getClicky.com) tracking code everywhere.
 * Option to ignore admins.
 * Option to store names of commenters.
+* Option to disable the use of cookies.
 * Stores comments as an action using the getClicky [internal data logging API](https://secure.getclicky.com/help/customization/manual#internal). This requires a [pro account](http://getclicky.com/145844) to work.
 * Option to track posts &amp; pages as goals and assign a revenue to that page or post.
 * An overview of your site's statistics on your dashboard.
