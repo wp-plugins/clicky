@@ -58,7 +58,9 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			echo '</table>';
 		}
 		
-		function Clicky_Admin() {
+		function __construct() {
+			$this->filename = __FILE__;
+			
 			add_action( 'admin_menu', array( &$this, 'register_settings_page' ) );
 			add_action( 'admin_menu', array( &$this, 'register_dashboard_page' ) );
 			
@@ -181,7 +183,7 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 								$rows[] = array(
 											'id' => 'cookies_disable',
 											'label' => __('Disable cookies', 'clicky'),
-											'desc' => __('If you don\'t want your site to use cookies, check this button. By doing so, uniques will instead be determined based on their IP address.', 'clicky'),
+											'desc' => __('If you don\'t want Clicky to use cookies on your site, check this button. By doing so, uniques will instead be determined based on their IP address.', 'clicky'),
 											'content' => '<input type="checkbox" '.checked($options['cookies_disable'],true,false).' name="cookies_disable" id="cookies_disable"/>',
 										);
 
@@ -407,20 +409,20 @@ var clicky_custom_session = {
 <?php
 	}
 	
+	$clicky_extra = '';
+	
 	// Goal tracking
 	if (is_singular()) {
 		global $post;
 		$clicky_goal = get_post_meta($post->ID,'_clicky_goal',true);
 		if (is_array($clicky_goal) && !empty($clicky_goal['id'])) {
-			echo '<script type="text/javascript">';
-			echo 'var clicky_goal = { id: "'.trim($clicky_goal['id']).'"';
+			$clicky_extra .= 'var clicky_goal = { id: "'.trim($clicky_goal['id']).'"';
 			if (isset($clicky_goal['value']) && !empty($clicky_goal['value'])) 
-				echo ', revenue: "'.$clicky_goal['value'].'"';
-			echo ' };';
-			echo '</script>';
+				$clicky_extra .= ', revenue: "'.$clicky_goal['value'].'"';
+			$clicky_extra .= ' };'."\n";
 		}
 	}
-	
+		
 	if ( isset( $options['outbound_pattern'] ) && trim( $options['outbound_pattern'] ) != '' ) {
 		$patterns = explode( ',', $options['outbound_pattern'] );
 		$pattern = '';
@@ -436,11 +438,14 @@ var clicky_custom_session = {
 	if ( isset( $options['cookies_disable'] ) && $options['cookies_disable'] ) {
 		$clicky_extra .= "clicky_custom.cookies_disable = 1;\n";
 	}
-		?>
+
+	if ( !empty( $clicky_extra ) ) {
+?>
 <script type="text/javascript">
 var clicky_custom = {};
 <?php echo $clicky_extra; ?>
 </script>
+<?php } ?>
 <script type="text/javascript">
 	var clicky = { log: function(){ return; }, goal: function(){ return; }};
 	var clicky_site_id = <?php echo $options['site_id']; ?>;

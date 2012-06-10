@@ -14,6 +14,7 @@ if (!class_exists('Clicky_Base_Plugin_Admin')) {
 		var $ozhicon	= '';
 		var $optionname = '';
 		var $homepage	= '';
+		var $filename 	= '';
 		var $accesslvl	= 'manage_options';
 		
 		function config_page_styles() {

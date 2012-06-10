@@ -41,6 +41,7 @@ Read the authors [review of Clicky Analytics](http://yoast.com/clicky-analytics-
 = 1.4.2 =
 
 * Option to disable the use of cookies.
+* Fix some notices.
 
 = 1.4.1.3 =
 
