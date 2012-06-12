@@ -53,8 +53,8 @@ if ( ! class_exists( 'Clicky_Admin' ) ) {
 			printf(__('Clicky can track Goals for you too, %1$sread the documentation here%2$s. To be able to track a goal on this post, you need to specify the goal ID here. Optionally, you can also provide the goal revenue.', 'clicky'),'<a href="http://getclicky.com/stats/goals-setup">','</a>');
 			echo '</p>';
 			echo '<table>';
-			echo '<tr><th style="text-align:left;"><label for="clicky_goal_id">'.__('Goal ID', 'clicky').':</label></th><td><input type="text" name="clicky_goal_id" id="clicky_goal_id" value="'.$clicky_goal['id'].'"/></td></tr>';
-			echo '<tr><th style="text-align:left;"><label for="clicky_goal_value">'.__('Goal Revenue', 'clicky').': &nbsp;</label></th><td><input type="text" name="clicky_goal_value" id="clicky_goal_value" value="'.$clicky_goal['value'].'"/></td></tr>';
+			echo '<tr><th style="text-align:left;"><label for="clicky_goal_id">'.__('Goal ID', 'clicky').':</label></th><td><input type="text" name="clicky_goal_id" id="clicky_goal_id" value="'.( isset($clicky_goal['id']) ? $clicky_goal['id'] : '').'"/></td></tr>';
+			echo '<tr><th style="text-align:left;"><label for="clicky_goal_value">'.__('Goal Revenue', 'clicky').': &nbsp;</label></th><td><input type="text" name="clicky_goal_value" id="clicky_goal_value" value="'.( isset($clicky_goal['value']) ? $clicky_goal['value'] : '').'"/></td></tr>';
 			echo '</table>';
 		}
 		
