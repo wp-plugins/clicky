@@ -1,8 +1,8 @@
-# Translation of Clicky WordPress plugin in French (France)
+# Translation of Clicky WordPress plugin in Indonesian
 # This file is distributed under the same license as the Clicky WordPress plugin package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2012-06-28 16:25:44+0000\n"
+"PO-Revision-Date: 2012-06-28 16:22:37+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,19 +12,19 @@ msgstr ""
 
 #: clicky.php:37
 msgid "Clicky is almost ready. "
-msgstr "Clicky est presque prêt."
+msgstr "Clicky hampir siap."
 
 #: clicky.php:39
 msgid "You must %1$s enter your Clicky Site ID, Site Key and Admin Site Key%2$s for it to work."
-msgstr "Vous devez %1$s entrer votre ID du site Clicky, la clé du site et la clé d'administration%2$s pour que l'extension fonctionne."
+msgstr "Agar dapat bekerja, Anda harus %1$s memasukkan ID Clicky Site, Site Key dan Admin Site Key%2$s."
 
 #: clicky.php:48
 msgid "Clicky needs a bit more info. "
-msgstr "L'extension Clicky a besoin d'un peu plus d'informations."
+msgstr "Clicky membutuhkan informasi lebih."
 
 #: clicky.php:50
 msgid "You must %1$s enter your Clicky Database server%2$s for this plugin to be able to track comments."
-msgstr "Vous devez %1$s entrer vos informations de base de données Clicky%2$s pour que cette extension puisse suivre les commentaires."
+msgstr "Anda harus %1$s memasukkan server%2$s Clicky Database ke plugin ini agar dapat melacak komentar."
 
 #: clicky.php:71 clicky.php:79
 msgid "Twitter"
@@ -32,194 +32,194 @@ msgstr "Twitter"
 
 #: clicky.php:73
 msgid "The Clicky.me short URL for this post is"
-msgstr "Le lien URL raccourci Clicky.me pour cet article est "
+msgstr "URL pendek Clicky.me untuk posting ini"
 
 #: clicky.php:75
 msgid "Tweet this post"
-msgstr "Tweeter cet article"
+msgstr "Tweet post ini"
 
 #: clicky.php:81
 msgid "This post is not published yet, a short URL will be created for it once the post is published. Do you want it to be tweeted automatically too?"
-msgstr "Cet article n'est pas encore publié. Un lien URL raccourci sera créé une fois que l'article sera publié. Voulez-vous également qu'il soit tweeté automatiquement ?"
+msgstr "Postingan ini belum dipublikasikan, URL pendek akan dibuat setelah dipublikasikan. Apakah Anda ingin ini di tweet secara otomatis juga?"
 
 #: clicky.php:83
 msgid "Tweet post on publish"
-msgstr "Tweeter l'article dès sa publication"
+msgstr "Posting Tweet di publikasikan"
 
 #: clicky.php:88
 msgid "Goal Tracking"
-msgstr "Suivi des objectifs"
+msgstr "Tujuan Pelacakan"
 
 #: clicky.php:90
 msgid "Clicky can track Goals for you too, %1$sread the documentation here%2$s. To be able to track a goal on this post, you need to specify the goal ID here. Optionally, you can also provide the goal revenue."
-msgstr "Clicky peut aussi faire pour vous le suivi de vos objectifs, %1$slisez la documentation pour en savoir plus%2$s. Pour être en mesure de suivre un objectif pour cet article, vous devez spécifier l' ID de l'objectif ici. Optionnellement, vous pouvez aussi ajouter l'objectif de revenue."
+msgstr "Clicky dapat melacak Tujuan untuk Anda juga,%1$sbaca dokumentasi disini%2$s. Untuk dapat melacak tujuan pada posting ini, Anda perlu menentukan ID tujuan disini. Opsional, Anda juga dapat memberikan pendapatan tujuan."
 
 #: clicky.php:93
 msgid "Goal ID"
-msgstr "ID de l'objectif"
+msgstr "ID Tujuan"
 
 #: clicky.php:94
 msgid "Goal Revenue"
-msgstr "Revenu de l'objectif"
+msgstr "Pendapatan Tujuan"
 
 #: clicky.php:134
 msgid "Stats"
-msgstr "Statistiques"
+msgstr "Statistik"
 
 #: clicky.php:149
 msgid "You cannot edit the Clicky settings."
-msgstr "Vous ne pouvez pas modifier les réglages de Clicky."
+msgstr "Anda tidak dapat mengedit pengaturan Clicky."
 
 #: clicky.php:168
 msgid "Clicky settings have been updated."
-msgstr "Les réglages de Clicky ont été mis à jour."
+msgstr "Pengaturan Clicky telah diperbarui."
 
 #: clicky.php:181
 msgid "Configuration"
-msgstr "Configuration"
+msgstr "Konfigurasi"
 
 #: clicky.php:189
 msgid "Go to your %1$suser homepage on Clicky%2$s and click &quot;Preferences&quot; under the name of the domain, you will find the Site ID, Site Key, Admin Site Key and Database Server under Site information."
-msgstr "Allez sur votre %1$spage d'accueil utilisateur du site Clicky%2$s et cliquez sur &quot;Préférences&quot; sous le nom de domaine, vous y trouverez l'ID du site, sa clé, sa clé d'administration et les informations du serveur sous la section Information."
+msgstr "Masuk ke %1$suser Halaman Utama anda di Clicky%2$s dan klik &quot;Preferences&quot; di bawah nama domain, Anda akan menemukan ID Site, Site Key, Admin Site Key dan Database Server dibawah informasi Situs."
 
 #: clicky.php:194
 msgid "Site ID"
-msgstr "ID du site"
+msgstr "ID Site"
 
 #: clicky.php:201
 msgid "Site Key"
-msgstr "Clé du site"
+msgstr "Site Key"
 
 #: clicky.php:208
 msgid "Admin Site Key"
-msgstr "Clé du site de l'administrateur"
+msgstr "Admin Site Key"
 
 #: clicky.php:215
 msgid "Database Server"
-msgstr "Serveur de la base de données"
+msgstr "Database Server"
 
 #: clicky.php:221
 msgid "Clicky Settings"
-msgstr "Réglages de Clicky"
+msgstr "Pengaturan Clicky"
 
 #: clicky.php:223
 msgid "This plugin allows you to automatically create short URLs through the %1$sClicky.me service%2$s"
-msgstr "Cette extension vous permet de créer automatiquement des liens URL raccourcis par le biais du %1$sservice Clicky.me%2$s"
+msgstr "Plugin ini mengijinkan Anda untuk secara otomatis membuat URL singkat melalui  %1$sClicky.me service%2$s"
 
 #: clicky.php:223
 msgid "and tweet your post immediately when you publish it. To do that, this plugin will need your Twitter username and pass."
-msgstr "et de tweeter votre article immédiatement quand vous le publier. Pour cela, l'extension a besoin de votre nom d'utilisateur et de votre mot de passe Twitter."
+msgstr "dan tweet posting Anda segera ketika Anda mempublikasikannya. Untuk melakukannya, plugin ini membutuhkan username dan pasword Twitter Anda."
 
 #: clicky.php:228
 msgid "Ignore Admin users"
-msgstr "Ignorer les utilisateurs Administrateurs"
+msgstr "Abaikan Admin pengguna"
 
 #: clicky.php:229
 msgid "If you are using a caching plugin, such as WP-Supercache, please ensure that you have it configured to NOT use the cache for logged in users. Otherwise, admin users <em>will still</em> be tracked."
-msgstr "Si vous utilisez une extension de cache, comme WP-SuperCache, assurez-vous que vous l'avez configuré afin de ne pas utiliser le cache pour les utilisateurs connectés. Sinon, les administrateurs <em>vont encore</em> être suivis."
+msgstr "Jika Anda menggunakan plugin caching, seperti WP-Supercache, pastikan bahwa Anda telah mengkonfigurasi untuk TIDAK menggunakan cache untuk login pengguna. Jika tidak, admin pengguna  <em>masih bisa</em> dilacak."
 
 #: clicky.php:235
 msgid "Track names of commenters"
-msgstr "Faire le suivi des noms des commentateurs "
+msgstr "Melacak nama komentator"
 
 #: clicky.php:240
 msgid "Advanced Settings"
-msgstr "Paramètres avancés"
+msgstr "Pengaturan Lanjutan"
 
 #: clicky.php:245
 msgid "Allow Clicky.me integration"
-msgstr "Permettre l'intégration de Clicky.me"
+msgstr "Mengijinkan integrasi Clicky.me"
 
 #: clicky.php:252
 msgid "Auto Tweet"
-msgstr "Tweeter automatiquement"
+msgstr "Auto Tweet"
 
 #: clicky.php:253
 msgid "No need to check the box on each post, by checking this box, each post get's tweeted automatically."
-msgstr "En cochant cette case, vous n'aurez pas besoin de cocher la case sur chaque article, puisque chaque nouvel article sera tweeté automatiquement."
+msgstr "Tidak perlu mencentang kotak pada setiap posting, dengan mencentang kotak ini, setiap posting di tweet secara otomatis."
 
 #: clicky.php:259
 msgid "Twitter username"
-msgstr "Nom d'utilisateur Twitter"
+msgstr "Username Twitter"
 
 #: clicky.php:266
 msgid "Twitter password"
-msgstr "Mot de passe Twitter"
+msgstr "Password Twitter"
 
 #: clicky.php:273
 msgid "Prefix for Tweets"
-msgstr "Préfixe pour les Tweets"
+msgstr "Awalan untuk Tweets"
 
 #: clicky.php:274
 msgid "This text will be put in front of Tweets that are published when a blog post is published"
-msgstr "Ce texte va être ajouté avant les tweets qui sont partagés quand un nouvel article est publié"
+msgstr "Teks ini akan diletakkan di depan Tweets yang dipublikasikan ketika postingan blog ini dipublikasikan."
 
 #: clicky.php:278
 msgid "Clicky.me &amp; Twitter Integration"
-msgstr "Clicky.me &amp; l'intégration Twitter"
+msgstr "Integrasi Clicky.me &amp; Twitter"
 
 #: clicky.php:283
 msgid "Update Clicky Settings"
-msgstr "Mettre à jour les paramètres Clicky"
+msgstr "Perbarui Pengaturan Clicky"
 
 #: clicky.php:392
 msgid "Clicky tracking not shown because you're an administrator and you've configured Clicky to ignore administrators."
-msgstr "Le suivi Clicky ne peut être affiché parce que vous êtes un administrateur et vous avez configuré Clicky pour ignorer les administrateurs."
+msgstr "Pelacakan Clicky tidak ditampilkan karena Anda adalah administrator dan Anda telah mengkonfigurasi Clicky untuk mengabaikan administrator."
 
 #: clicky.php:513
 msgid "Posted a comment"
-msgstr "Publié un commentaire"
+msgstr "Memposting komentar"
 
 #: yst_plugin_tools.php:64
 msgid "Settings"
-msgstr "Réglages"
+msgstr "Pengaturan"
 
 #: yst_plugin_tools.php:138
 msgid "Why not do any or all of the following:"
-msgstr "Pourquoi ne pas essayer de :"
+msgstr "Mengapa tidak melakukan salah satu atau semua hal berikut:"
 
 #: yst_plugin_tools.php:140
 msgid "Link to it so other folks can find out about it."
-msgstr "Faites un lien vers cette extension afin que d'autres puissent la découvrir."
+msgstr "Tautkan sehingga orang lain dapat mencari tahu."
 
 #: yst_plugin_tools.php:141
 msgid "Give it a good rating on WordPress.org."
-msgstr "Donnez-lui une bonne évaluation sur WordPress.org."
+msgstr "Berikan rating yang baik di Wordpress.org"
 
 #: yst_plugin_tools.php:142
 msgid "Donate a token of your appreciation."
-msgstr "Donnez en gage de votre appréciation."
+msgstr "Donasi tanda penghargaan Anda."
 
 #: yst_plugin_tools.php:144
 msgid "Like this plugin?"
-msgstr "Vous aimez cette extension ?"
+msgstr "Suka plugin ini?"
 
 #: yst_plugin_tools.php:151
 msgid "If you have any problems with this plugin or good ideas for improvements or new features, please talk about them in the"
-msgstr "Si vous avez des problèmes avec cette extension, ou vous avez des idées pour l'améliorer, vous pouvez en discuter dans le "
+msgstr "Jika Anda memiliki masalah dengan plugin ini atau punya ide bagus untuk perbaikan atau fitur baru, silakan menyampaikannya di"
 
 #: yst_plugin_tools.php:151
 msgid "Support forums"
-msgstr "Forums d'aide (en anglais)"
+msgstr "Support forum"
 
 #: yst_plugin_tools.php:152
 msgid "Need support?"
-msgstr "Besoin d'aide ?"
+msgstr "Butuh dukungan?"
 
 #: yst_plugin_tools.php:168
 msgid "Subscribe"
-msgstr "Abonnez-vous"
+msgstr "Berlangganan"
 
 #: yst_plugin_tools.php:169 yst_plugin_tools.php:171
 msgid "Latest news from Clicky"
-msgstr "Les dernières nouvelles de Clicky"
+msgstr "Kabar terbaru dari Clicky"
 
 #: yst_plugin_tools.php:171
 msgid "Nothing to say..."
-msgstr "Rien à dire..."
+msgstr "Tidak berkata apapun..."
 
 msgid "Clicky for WordPress"
-msgstr "Clicky pour WordPress"
+msgstr "Clicky untuk WordPress"
 
 msgid "Integrates Clicky on your blog!"
-msgstr "Intégrer Clicky à votre blog !"
+msgstr "Mengintegrasikan Clicky di blog Anda!"

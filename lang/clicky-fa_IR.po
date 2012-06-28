@@ -1,225 +1,227 @@
-# Translation of Clicky WordPress plugin in French (France)
+# Translation of Clicky WordPress plugin in Persian
 # This file is distributed under the same license as the Clicky WordPress plugin package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2012-06-28 16:25:44+0000\n"
+"PO-Revision-Date: 2012-06-28 16:29:23+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: GlotPress/0.1\n"
 "Project-Id-Version: Clicky WordPress plugin\n"
 
 #: clicky.php:37
 msgid "Clicky is almost ready. "
-msgstr "Clicky est presque prêt."
+msgstr "کلیکی تقریبا آماده است."
 
 #: clicky.php:39
 msgid "You must %1$s enter your Clicky Site ID, Site Key and Admin Site Key%2$s for it to work."
-msgstr "Vous devez %1$s entrer votre ID du site Clicky, la clé du site et la clé d'administration%2$s pour que l'extension fonctionne."
+msgstr "شما باید%1$s آی دی کیلیکی سایت ،کلید سایت،کلید مدیریت سایت بزنید %2$sبرای به کار افتادن."
 
 #: clicky.php:48
 msgid "Clicky needs a bit more info. "
-msgstr "L'extension Clicky a besoin d'un peu plus d'informations."
+msgstr "کیلیکی نیازمند به ادامه است."
 
 #: clicky.php:50
 msgid "You must %1$s enter your Clicky Database server%2$s for this plugin to be able to track comments."
-msgstr "Vous devez %1$s entrer vos informations de base de données Clicky%2$s pour que cette extension puisse suivre les commentaires."
+msgstr ""
 
 #: clicky.php:71 clicky.php:79
 msgid "Twitter"
-msgstr "Twitter"
+msgstr "توییتر"
 
 #: clicky.php:73
 msgid "The Clicky.me short URL for this post is"
-msgstr "Le lien URL raccourci Clicky.me pour cet article est "
+msgstr "آدرس کوتاه Clicky.me برای این پست عبارت است از "
 
 #: clicky.php:75
 msgid "Tweet this post"
-msgstr "Tweeter cet article"
+msgstr "توییت این پست"
 
 #: clicky.php:81
 msgid "This post is not published yet, a short URL will be created for it once the post is published. Do you want it to be tweeted automatically too?"
-msgstr "Cet article n'est pas encore publié. Un lien URL raccourci sera créé une fois que l'article sera publié. Voulez-vous également qu'il soit tweeté automatiquement ?"
+msgstr "این نوشته انتشار نیافته است، یک پیوند کوتاه برای آن ساخته شده است. آیا می خواهید آن را به صورت خودکارتوییت کنید"
 
 #: clicky.php:83
 msgid "Tweet post on publish"
-msgstr "Tweeter l'article dès sa publication"
+msgstr "توییت کردن پست برای اشتراک"
 
 #: clicky.php:88
 msgid "Goal Tracking"
-msgstr "Suivi des objectifs"
+msgstr "پیگیری دروازه"
 
 #: clicky.php:90
 msgid "Clicky can track Goals for you too, %1$sread the documentation here%2$s. To be able to track a goal on this post, you need to specify the goal ID here. Optionally, you can also provide the goal revenue."
-msgstr "Clicky peut aussi faire pour vous le suivi de vos objectifs, %1$slisez la documentation pour en savoir plus%2$s. Pour être en mesure de suivre un objectif pour cet article, vous devez spécifier l' ID de l'objectif ici. Optionnellement, vous pouvez aussi ajouter l'objectif de revenue."
+msgstr ""
 
 #: clicky.php:93
 msgid "Goal ID"
-msgstr "ID de l'objectif"
+msgstr "آی دی ورود"
 
 #: clicky.php:94
 msgid "Goal Revenue"
-msgstr "Revenu de l'objectif"
+msgstr "بازده هدف"
 
 #: clicky.php:134
 msgid "Stats"
-msgstr "Statistiques"
+msgstr "آمار"
 
 #: clicky.php:149
 msgid "You cannot edit the Clicky settings."
-msgstr "Vous ne pouvez pas modifier les réglages de Clicky."
+msgstr "شما نمی توانید تنظیمات کیلیکی را ویرایش کنید."
 
 #: clicky.php:168
 msgid "Clicky settings have been updated."
-msgstr "Les réglages de Clicky ont été mis à jour."
+msgstr "تنظیمات کیلیکی به روز شد."
 
 #: clicky.php:181
 msgid "Configuration"
-msgstr "Configuration"
+msgstr "پیکربندی"
 
 #: clicky.php:189
 msgid "Go to your %1$suser homepage on Clicky%2$s and click &quot;Preferences&quot; under the name of the domain, you will find the Site ID, Site Key, Admin Site Key and Database Server under Site information."
-msgstr "Allez sur votre %1$spage d'accueil utilisateur du site Clicky%2$s et cliquez sur &quot;Préférences&quot; sous le nom de domaine, vous y trouverez l'ID du site, sa clé, sa clé d'administration et les informations du serveur sous la section Information."
+msgstr ""
 
 #: clicky.php:194
 msgid "Site ID"
-msgstr "ID du site"
+msgstr "آی دی سایت"
 
 #: clicky.php:201
 msgid "Site Key"
-msgstr "Clé du site"
+msgstr "کلید سایت"
 
 #: clicky.php:208
 msgid "Admin Site Key"
-msgstr "Clé du site de l'administrateur"
+msgstr "کلید مدیریت سایت"
 
 #: clicky.php:215
 msgid "Database Server"
-msgstr "Serveur de la base de données"
+msgstr "سرور پایگاه داده"
 
 #: clicky.php:221
 msgid "Clicky Settings"
-msgstr "Réglages de Clicky"
+msgstr "تنظیمات کیلیکی"
 
 #: clicky.php:223
 msgid "This plugin allows you to automatically create short URLs through the %1$sClicky.me service%2$s"
-msgstr "Cette extension vous permet de créer automatiquement des liens URL raccourcis par le biais du %1$sservice Clicky.me%2$s"
+msgstr ".این افزونه به شما اجازه می دهد از طریق  %1$sسرویس کلیکی %1$s پیوند کوتاه بسازید"
 
 #: clicky.php:223
 msgid "and tweet your post immediately when you publish it. To do that, this plugin will need your Twitter username and pass."
-msgstr "et de tweeter votre article immédiatement quand vous le publier. Pour cela, l'extension a besoin de votre nom d'utilisateur et de votre mot de passe Twitter."
+msgstr "و پست شما را فورا بعد از انتشار توییت می کند.این افزونه به نام کاربری و رمز عبور توییتر نیاز دارد."
 
 #: clicky.php:228
 msgid "Ignore Admin users"
-msgstr "Ignorer les utilisateurs Administrateurs"
+msgstr "رد کردن مدیریت کاربران"
 
 #: clicky.php:229
 msgid "If you are using a caching plugin, such as WP-Supercache, please ensure that you have it configured to NOT use the cache for logged in users. Otherwise, admin users <em>will still</em> be tracked."
-msgstr "Si vous utilisez une extension de cache, comme WP-SuperCache, assurez-vous que vous l'avez configuré afin de ne pas utiliser le cache pour les utilisateurs connectés. Sinon, les administrateurs <em>vont encore</em> être suivis."
+msgstr ""
+"اگر شما از پلاگین کش استفاده می کنید،همچنین هز WP-Supercache، لطفاً مطمئین شوید که شما آن را تغییر داده اید یا نه برای استفادهاز این آدرس\n"
+"راه دیگر Otherwise, admin users <em>will still</em> تراک شود"
 
 #: clicky.php:235
 msgid "Track names of commenters"
-msgstr "Faire le suivi des noms des commentateurs "
+msgstr "پیگیری نام نظر دهندگان"
 
 #: clicky.php:240
 msgid "Advanced Settings"
-msgstr "Paramètres avancés"
+msgstr "تنظیمات پیشرفته"
 
 #: clicky.php:245
 msgid "Allow Clicky.me integration"
-msgstr "Permettre l'intégration de Clicky.me"
+msgstr "اجازه کلیک: افزودن من"
 
 #: clicky.php:252
 msgid "Auto Tweet"
-msgstr "Tweeter automatiquement"
+msgstr "توییت اتوماتیک"
 
 #: clicky.php:253
 msgid "No need to check the box on each post, by checking this box, each post get's tweeted automatically."
-msgstr "En cochant cette case, vous n'aurez pas besoin de cocher la case sur chaque article, puisque chaque nouvel article sera tweeté automatiquement."
+msgstr "بوسیله ی این جعبه نیازی به چک کردن توئیت هایتان نخواهید داشت و اتومات انجام می شود"
 
 #: clicky.php:259
 msgid "Twitter username"
-msgstr "Nom d'utilisateur Twitter"
+msgstr "نام کاربری توییتر"
 
 #: clicky.php:266
 msgid "Twitter password"
-msgstr "Mot de passe Twitter"
+msgstr "رمز عبور توییتر"
 
 #: clicky.php:273
 msgid "Prefix for Tweets"
-msgstr "Préfixe pour les Tweets"
+msgstr "پیشوند برای توییت ها"
 
 #: clicky.php:274
 msgid "This text will be put in front of Tweets that are published when a blog post is published"
-msgstr "Ce texte va être ajouté avant les tweets qui sont partagés quand un nouvel article est publié"
+msgstr "این متن نمایش داده خواهد شد در مقابل تویت ها شما هنگامی که یک پست وبلاگ منتشرمی شود"
 
 #: clicky.php:278
 msgid "Clicky.me &amp; Twitter Integration"
-msgstr "Clicky.me &amp; l'intégration Twitter"
+msgstr "Clicky.me &amp : ادغام با توئیتر"
 
 #: clicky.php:283
 msgid "Update Clicky Settings"
-msgstr "Mettre à jour les paramètres Clicky"
+msgstr "بروز رسانی تنظیمات"
 
 #: clicky.php:392
 msgid "Clicky tracking not shown because you're an administrator and you've configured Clicky to ignore administrators."
-msgstr "Le suivi Clicky ne peut être affiché parce que vous êtes un administrateur et vous avez configuré Clicky pour ignorer les administrateurs."
+msgstr "ردیابی آمار نشان داده شده است دلیل این که شما یک مدیر هستید و شما پیکربندی قالب به چشم پوشی از مدیران است."
 
 #: clicky.php:513
 msgid "Posted a comment"
-msgstr "Publié un commentaire"
+msgstr "نظری ارسال کرده"
 
 #: yst_plugin_tools.php:64
 msgid "Settings"
-msgstr "Réglages"
+msgstr "تنظیمات"
 
 #: yst_plugin_tools.php:138
 msgid "Why not do any or all of the following:"
-msgstr "Pourquoi ne pas essayer de :"
+msgstr "چرا انجام ندهید یا دنبال نکنید"
 
 #: yst_plugin_tools.php:140
 msgid "Link to it so other folks can find out about it."
-msgstr "Faites un lien vers cette extension afin que d'autres puissent la découvrir."
+msgstr "لینکی اضافه کنید تا دیگران آن را پیدا کنند"
 
 #: yst_plugin_tools.php:141
 msgid "Give it a good rating on WordPress.org."
-msgstr "Donnez-lui une bonne évaluation sur WordPress.org."
+msgstr "بدست آوردن رتبه ی خوب در WordPress.org."
 
 #: yst_plugin_tools.php:142
 msgid "Donate a token of your appreciation."
-msgstr "Donnez en gage de votre appréciation."
+msgstr "اهدا کنید برای قدردانی خود"
 
 #: yst_plugin_tools.php:144
 msgid "Like this plugin?"
-msgstr "Vous aimez cette extension ?"
+msgstr "این افزونه را دوست دارید؟"
 
 #: yst_plugin_tools.php:151
 msgid "If you have any problems with this plugin or good ideas for improvements or new features, please talk about them in the"
-msgstr "Si vous avez des problèmes avec cette extension, ou vous avez des idées pour l'améliorer, vous pouvez en discuter dans le "
+msgstr "اگر شما مسئله ایی با این افزونه دارید (پیشتهاد و انتقاد)چه خوب و چه بد برای پروژه های آینده لطفاً آن را با ما در میان بگذارید"
 
 #: yst_plugin_tools.php:151
 msgid "Support forums"
-msgstr "Forums d'aide (en anglais)"
+msgstr "انجمن های پشتیبانی"
 
 #: yst_plugin_tools.php:152
 msgid "Need support?"
-msgstr "Besoin d'aide ?"
+msgstr "آیا احتیاج به پشتیبانی دارید؟"
 
 #: yst_plugin_tools.php:168
 msgid "Subscribe"
-msgstr "Abonnez-vous"
+msgstr "اشتراک"
 
 #: yst_plugin_tools.php:169 yst_plugin_tools.php:171
 msgid "Latest news from Clicky"
-msgstr "Les dernières nouvelles de Clicky"
+msgstr "آخرین اخبار از کلیکی"
 
 #: yst_plugin_tools.php:171
 msgid "Nothing to say..."
-msgstr "Rien à dire..."
+msgstr "چیزی برای گفتن نیست..."
 
 msgid "Clicky for WordPress"
-msgstr "Clicky pour WordPress"
+msgstr "کلیکی برای وردپرس"
 
 msgid "Integrates Clicky on your blog!"
-msgstr "Intégrer Clicky à votre blog !"
+msgstr "کلیکی در وبلاگ شما"
