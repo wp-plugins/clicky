@@ -4,7 +4,7 @@ Donate link: http://yoast.com/donate/
 Tags: analytics, statistics, clicky, getclicky, affiliate, outbound links, analysis, Joost de Valk, Yoast
 Requires at least: 2.8
 Tested up to: 3.3
-Stable tag: 1.4.3
+Stable tag: 1.4.2.1
 
 Integrates the Clicky (from getClicky.com) web analytics service into your blog.
 
@@ -43,6 +43,7 @@ Read the authors [review of Clicky Analytics](http://yoast.com/clicky-analytics-
 
 * Fixed a few notices.
 * Fixed a possible crash due to not having imagemagick compiled in.
+* Added a whole bunch of translations.
 
 = 1.4.2 =
 
