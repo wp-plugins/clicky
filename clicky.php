@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Clicky for WordPress
-Version: 1.4.2.1
+Version: 1.4.2.2
 Plugin URI: http://yoast.com/wordpress/clicky/
 Description: Integrates Clicky on your blog!
 Author: Joost de Valk
@@ -420,9 +420,8 @@ function clicky_script() {
 			}
 			return '';
 		}
-		var clicky_custom_session = {
-			username:clicky_gc('comment_author_<?php echo md5( get_option( "siteurl" ) ); ?>')
-		};
+		var username_check = clicky_gc('comment_author_<?php echo md5( get_option( "siteurl" ) ); ?>');
+		if( username_check ) var clicky_custom_session = { username: username_check };
 	</script>
 	<?php
 	}
