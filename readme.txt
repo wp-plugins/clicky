@@ -39,6 +39,10 @@ Read the authors [review of Clicky Analytics](http://yoast.com/clicky-analytics-
 
 == Changelog ==
 
+= trunk =
+
+* Added Turkish (tr_TK)
+
 = 1.4.2.2 =
 
 * Prevent collission with utm username param.
